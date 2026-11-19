@@ -2,7 +2,7 @@
 
 My entries for [Nodevember](https://nodevember.com), the November challenge for node-based art. One prompt a day.
 
-Every piece is procedural, built with Blender 5.2 Geometry Nodes and shader nodes, with no image textures and no
+Every piece is procedural, built with Blender 5.2 (5.3 from Day 17) Geometry Nodes and shader nodes, with no image textures and no
 hand modelling. Days 1–8 come with the `.blend` file and the Python build script that generates it, so you can read
 exactly how it is made and build it again yourself. From Day 9 on, a day folder holds a node-by-node tutorial and the
 finished renders.
@@ -27,6 +27,7 @@ finished renders.
 | 14 | Shell | **One tube, every shell.** A chambered nautilus in a black studio melts into an ammonite, a garden snail, a tower shell, a textile cone, a conch and a cockle, and ends on an abalone that turns over to show its mother-of-pearl. All eight are one Geometry Nodes group built on David Raup's 1966 coiling model: one closed curve, grown W times a turn, kept a share D from the axis, slid T down it, and shaped by S, plus a lean that lets the abalone's mouth face down. The ribs, holes and every colour pattern are drawn from the shell's own coordinates, so the video is just the sliders keyed from one kind to the next. Rendered in Cycles. | [files](2026/day14-shell-v1-morphospace) · [video](2026/day14-shell-v1-morphospace/loop.mp4) · [**node-by-node tutorial**](2026/day14-shell-v1-morphospace/tutorial/README.md) |
 | 15 | Pearl | **Nacre dive.** One camera move from a whole Tahitian pearl on a white sweep down to the surface its lustre comes from, and back out. Past the fine wavy growth lines a loupe shows, the surface turns into terraces of irregular aragonite tablets, 8 µm across and 0.45 µm thick, each layer its own thin film in green or rose; the key light sweeps across them while the camera circles. One growth-height field decides it all: where it crosses a whole layer, a layer ends, which is a terrace step close up and a growth line from a millimetre away. The material draws those terraces on the whole pearl, and real tablet geometry takes over at the dive point below 1.2 mm frame width, with the same film on both so the hand-off doesn't pop. Rendered in Cycles. | [files](2026/day15-pearl-v2-nacre-dive) · [video](2026/day15-pearl-v2-nacre-dive/loop.mp4) · [**node-by-node tutorial**](2026/day15-pearl-v2-nacre-dive/tutorial/README.md) |
 | 16 | Wave | **Comb jelly.** A sea gooseberry, a comb jelly about 15 mm long, hangs in black water, then swims: its eight comb rows beat one paddle after another, so a wave runs down every row from the apical organ to the mouth, and the moving paddles scatter the light into flecks of red, green and blue that travel with it. The wave is a delay (each plate starts its beat a little after its neighbour), the colour comes from where a plate is in its stroke, and a stop front runs down the rows the same way until the animal coasts to rest. Body, 192 plates, organs, canals, two tentacles with 270 filaments and the marine snow all come from one Geometry Nodes tree; the jelly is a faint scattering volume, shot at macro depth of field. Rendered in Cycles with sensor-style grain, slowed about 10× from life. | [files](2026/day16-wave-v1-comb-jelly) · [video](2026/day16-wave-v1-comb-jelly/loop.mp4) · [**node-by-node tutorial**](2026/day16-wave-v1-comb-jelly/tutorial/README.md) |
+| 17 | Caustics | **Five cuts of light.** A cut-crystal decanter stands in a dark room under one low sun, seen straight down, and turns 30° while its cut morphs through five classic patterns of cut and pressed glass: flutes, swirl, diamond thumbprint, honeycomb and hobnail. The table shows only the light that went through the glass, and it re-weaves itself with every cut, from a fan of straight bands to rows of bright drops, each focused by one round dome. That light is ray-traced in Geometry Nodes, about 6.4 million sun rays a frame, each split into five wavelengths that bend by different amounts, so its edges carry thin rainbow fringes; the glass the camera sees uses Blender 5.3's new spectral dispersion with the same formula. A 14-second video, rendered in Cycles. | [files](2026/day17-caustics-v3-cut-glass) · [video](2026/day17-caustics-v3-cut-glass/loop.mp4) · [**node-by-node tutorial**](2026/day17-caustics-v3-cut-glass/tutorial/README.md) |
 
 <p>
   <img src="2026/day01-origami/_still_086.png" width="49%" alt="The washi sheet folded into a dart on a stack of paper">
@@ -106,6 +107,11 @@ finished renders.
 <p>
   <img src="2026/day16-wave-v1-comb-jelly/render.png" width="49%" alt="A clear egg-shaped comb jelly in black water mid-swim, eight milky comb rows with red, green and blue flecks along their rims, a white pharynx and two tentacle sheaths inside, thin fringed tentacles hanging below">
   <img src="2026/day16-wave-v1-comb-jelly/render-200.png" width="49%" alt="The same animal later in the swim, with fewer red, green and blue flecks left along its rim as the rows begin to go quiet, the two fringed tentacles streaming below">
+</p>
+
+<p>
+  <img src="2026/day17-caustics-v3-cut-glass/render-150.png" width="49%" alt="Seen from above on black: a cut-glass decanter as bright rings at the left edge, and to its right a fan of warm light on the table broken into a lace of rhombic patches with bright edges">
+  <img src="2026/day17-caustics-v3-cut-glass/render.png" width="49%" alt="The same decanter later, cut as hobnail: the light on the table gathers into rows of bright teardrop-shaped spots, each focused by one round dome of glass, with faint rainbow fringes on their rims">
 </p>
 
 ## What is in a day folder
