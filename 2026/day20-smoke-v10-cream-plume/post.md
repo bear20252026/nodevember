@@ -7,7 +7,7 @@ Date: 2026-11-22  ·  Folder: `2026/day20-smoke-v10-cream-plume`
 - **One-sentence concept**: multi-nozzle dense cream plumes erupt through still rose-tinted water via a true 3D Navier-Stokes solver in Blender 5.3 Geometry Nodes, rolling into lush ivory mushroom-cap curls whose folded crevices glow warm peach-coral under 20-bounce Cycles volumetric multiple scattering.
 - **Constraint**: 100% procedural in Blender 5.3 Geometry Nodes (native grid nodes: midpoint velocity advection, BFECC dye advection, vorticity confinement, dual-scale curl disturbance, and Fixed-boundary `Grid Solve Poisson`); no Mantaflow, no external OpenVDB bake, no image textures, no imported meshes.
 - **Technique to learn or show off**:
-  - High-resolution (~230³) multi-nozzle Rayleigh-Taylor / Kelvin-Helmholtz fluid simulation inside a Geometry Nodes Simulation Zone (`32` main-tree nodes + 6 modular teaching groups, `189` nodes total).
+  - High-resolution (~230³) multi-nozzle Rayleigh-Taylor / Kelvin-Helmholtz fluid simulation inside a Geometry Nodes Simulation Zone (`32` main-tree nodes + 6 modular teaching groups, `168` nodes total).
   - Energy-conserving `Principled Volume` with dual-regime density mapping (steep creamy milk core + soft diluted mist edge) and 20 volume bounces so deep crevices tint naturally into warm peach-rose without cyan spectral inversion or murky grey shadows.
   - Shallow macro telephoto framing (`90mm f/3.6`) with warm studio-aquarium backlighting.
 - **Output**:

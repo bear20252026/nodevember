@@ -49,7 +49,7 @@ Each coloured frame in a tree is one logical section. The main tree has three nu
 | 2 | Navier-Stokes fluid solver | 11 (wraps 4 step groups inside one Simulation Zone) | runs advect → emit → forces → pressure projection every frame to evolve velocity `V` and cream density `D` |
 | 3 | Volume output | 3 | binds the evolved `density` grid onto a 2³ dummy Volume Cube and assigns `PA_CreamPlume` |
 
-The main tree has 32 nodes including its Group Output. Across `PA_CreamPlume_GN` and its six helper groups (`PA_GridDomain`, `PA_AdvectStep`, `PA_MultiNozzleEmitter`, `PA_MilkNozzle`, `PA_FluidForces`, `PA_PressureProject`), the full procedural solver totals 189 nodes.
+The main tree has 32 nodes including its Group Output. Across `PA_CreamPlume_GN` and its six helper groups (`PA_GridDomain`, `PA_AdvectStep`, `PA_MultiNozzleEmitter`, `PA_MilkNozzle`, `PA_FluidForces`, `PA_PressureProject`), the full procedural solver totals 168 nodes.
 
 The modifier exposes nine sliders:
 
@@ -117,9 +117,9 @@ In Blender 5.3.0, `GeometryNodeGridAdvect` works cleanly on float grids (`densit
 
 ### Inside `PA_MultiNozzleEmitter` & `PA_MilkNozzle`
 
-![Inside PA_MultiNozzleEmitter: top frame a multiplies 4D front breakup noise into 13 named Milk Nozzle group nodes and combines their Emit with Maximum and Jet Force with Add; bottom frame b multiplies advected cream by (1 - fade·dt)·sponge, injects emit·rate·dt, and clamps 0..1.50 into cream density](images/nodes-emitter.png)
+![Inside PA_MultiNozzleEmitter: top frame a multiplies 4D front breakup noise into a chain of 13 named Milk Nozzle group nodes, each folding its Emit (Maximum) and Jet Force (Add) into the running totals it receives; bottom frame b multiplies advected cream by (1 - fade·dt)·sponge, injects emit·rate·dt, and clamps 0..1.50 into cream density](images/nodes-emitter.png)
 
-![Inside PA_MilkNozzle: left frame a builds a smooth pulse window (0.08s ramp on, 0.28s ramp off) and multiplies it by a smoothstep spherical ball mask; right frame b outputs modulated dye emit and jet momentum scaled by 3.6](images/nodes-nozzle.png)
+![Inside PA_MilkNozzle: left frame a builds a smooth pulse window (0.08s ramp on, 0.28s ramp off) and multiplies it by a smoothstep spherical ball mask; middle frame b makes modulated dye emit and jet momentum scaled by 3.6; right frame c folds them into the running totals (Maximum for Emit, Add for Jet Force)](images/nodes-nozzle.png)
 
 Each nozzle is one call to `PA_MilkNozzle`: a smooth temporal gate (`ramp on (0.08s)` × `ramp off (0.28s)` → `pulse window`) multiplied by a soft sphere (`spherical ball mask`, inner radius `0.26·r`, outer radius `1.15·r`). Inside `PA_MultiNozzleEmitter`, a 4D Noise Texture (`4D front breakup noise`, scale `9.5`, detail `2.5`, roughness `0.58`, `W = Time × 0.95`) remapped to `0.48..1.33` (`noise mod 0.48..1.33`) modulates every nozzle *except* `hero dome`:
 
@@ -131,7 +131,7 @@ Each nozzle is one call to `PA_MilkNozzle`: a smooth temporal gate (`ramp on (0.
 | `bottom 1`–`4` | `(-0.72..0.02, -0.18..-0.08, -0.78..-0.56)` | `0.072–0.100` | upward-right curling | `0.00–1.90` | `0.95–1.05` | on | crisp lower foreground blossoms |
 | `right mist veil` | `(0.04, 0.34, -0.08)` | `0.180` | `(1.15, 0.08, -0.14)` | `0.00–1.80` | `0.16` | on | subtle low-density milk haze dissolving on the right |
 
-All 13 `Emit` masks combine via `MAXIMUM` (`combined nozzle emit`) so overlapping nozzles never over-saturate density, while their `Jet Force` vectors (`jet momentum × 3.6`) sum via `ADD` (`combined jet force`). Section `b` applies gentle decay (`(1 - fade·dt) · sponge`), adds `emit · Cream Emit · dt` (`d_prev + emit·rate·dt`), and clamps the result to `0..1.50` (`clamp 0..1.50`).
+The 13 nozzles are chained: each `PA_MilkNozzle` takes `Emit In` / `Jet Force In` from the nozzle before it (the first one starts from `0`) and folds its own mask in with `MAXIMUM` (`emit: overlaps never over-saturate (max)`), while its `Jet Force` vector (`jet momentum × 3.6`) sums via `ADD` (`jet force: momenta add`), so the last nozzle outputs the combined result with no separate Maximum/Add nodes. Section `b` applies gentle decay (`(1 - fade·dt) · sponge`), adds `emit · Cream Emit · dt` (`d_prev + emit·rate·dt`), and clamps the result to `0..1.50` (`clamp 0..1.50`).
 
 ### Trick · One smooth hero nozzle beside twelve noisy micro-nozzles
 
