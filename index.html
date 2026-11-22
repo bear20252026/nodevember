@@ -1,0 +1,411 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Nodevember — Frontier</title>
+<meta name="description" content="Twenty procedural Nodevember studies, one prompt a day: Blender Geometry Nodes, no image textures, no hand modelling." />
+<meta name="theme-color" content="#f4f2ed" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Crect width=%2232%22 height=%2232%22 rx=%228%22 fill=%22%23f4f2ed%22/%3E%3Ccircle cx=%2216%22 cy=%2216%22 r=%225%22 fill=%22%23b5452d%22/%3E%3C/svg%3E" />
+<script>if (location.search.indexOf("embed=1") >= 0) document.documentElement.classList.add("embed");</script>
+<style>
+      :root {
+        --paper: #f4f2ed;
+        --ink: #1b1a17;
+        --muted: #716d64;
+        --hair: #d8d4ca;
+        --accent: #b5452d;
+        --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        --sans: "Helvetica Neue", Arial, sans-serif;
+      }
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--sans); -webkit-font-smoothing: antialiased; }
+      a { color: inherit; }
+      .page { max-width: 1480px; margin: 0 auto; padding: 0 34px 64px; }
+      .mast { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 27px 0 19px; border-bottom: 1px solid var(--hair); }
+      .brand { display: flex; align-items: center; gap: 10px; font-size: 15px; letter-spacing: -.2px; }
+      .brand i { display: block; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 12%, transparent); }
+      .mast nav { display: flex; align-items: center; gap: 24px; font-family: var(--mono); font-size: 10px; letter-spacing: .5px; text-transform: uppercase; color: var(--muted); }
+      .mast nav a { text-decoration: none; padding-bottom: 3px; border-bottom: 1px solid transparent; }
+      .mast nav a:hover { color: var(--ink); border-color: var(--ink); }
+      .hero { padding: 80px 0 48px; border-bottom: 1px solid var(--ink); }
+      .eyebrow { margin: 0; font-family: var(--mono); font-size: 10px; line-height: 1.6; letter-spacing: 1.25px; text-transform: uppercase; color: var(--muted); }
+      .hero h1 { margin: 24px 0 22px; font-size: clamp(58px, 9.2vw, 136px); line-height: .87; letter-spacing: -.062em; font-weight: 400; max-width: 10ch; }
+      .hero h1 em { color: var(--accent); font-style: normal; }
+      .hero .lead { max-width: 62ch; margin: 0; font-size: 15px; line-height: 1.75; color: #55534b; }
+      .hero .lead b { color: var(--ink); font-weight: 500; }
+      .stats { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 27px; }
+      .stats span { display: inline-flex; align-items: center; gap: 7px; padding: 7px 10px; border: 1px solid var(--hair); border-radius: 999px; font-family: var(--mono); font-size: 9.5px; letter-spacing: .35px; color: var(--muted); background: rgba(255,255,255,.32); }
+      .stats b { color: var(--ink); font-weight: 500; }
+      .filters { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin: 38px 0 0; }
+      .search { flex: 1 1 280px; max-width: 420px; }
+      .search input { width: 100%; border: 1px solid var(--hair); border-radius: 999px; background: rgba(255,255,255,.35); padding: 11px 16px; font-family: var(--mono); font-size: 10px; letter-spacing: .3px; color: var(--ink); outline: none; }
+      .search input:focus { border-color: var(--ink); background: #fff; }
+      .filter-buttons { display: flex; gap: 6px; flex-wrap: wrap; }
+      .filter-buttons button { border: 1px solid var(--hair); background: transparent; border-radius: 999px; padding: 9px 12px; font-family: var(--mono); font-size: 9px; letter-spacing: .45px; text-transform: uppercase; color: var(--muted); cursor: pointer; }
+      .filter-buttons button:hover, .filter-buttons button.on { border-color: var(--ink); color: var(--ink); background: rgba(255,255,255,.44); }
+      .count { margin-left: auto; font-family: var(--mono); font-size: 9px; color: var(--muted); letter-spacing: .4px; text-transform: uppercase; }
+      .catalogue { padding-top: 34px; }
+      .grid { display: grid; gap: 25px; }
+      .piece { display: block; text-decoration: none; min-width: 0; }
+      .piece figure { position: relative; overflow: hidden; margin: 0; border-radius: 18px; background: #111; box-shadow: 0 0 0 1px rgba(20,20,22,.07), 0 24px 38px -32px rgba(40,34,20,.6); }
+      .piece figure img, .piece figure video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+      .piece figure img { transition: transform .55s cubic-bezier(.2,.8,.2,1), filter .55s; }
+      .piece:hover figure img { transform: scale(1.035); filter: saturate(1.08) contrast(1.03); }
+      .piece figure video { opacity: 0; transition: opacity .35s; pointer-events: none; z-index: 1; }
+      .piece .no { position: absolute; top: 12px; left: 13px; z-index: 2; font-family: var(--mono); font-size: 10px; letter-spacing: .7px; color: rgba(255,255,255,.92); text-shadow: 0 1px 12px rgba(0,0,0,.4); }
+      .piece .play { position: absolute; left: 13px; bottom: 12px; z-index: 2; padding: 6px 9px; border: 1px solid rgba(255,255,255,.28); border-radius: 999px; background: rgba(12,12,14,.44); color: #fff; font-family: var(--mono); font-size: 8.5px; letter-spacing: .55px; text-transform: uppercase; backdrop-filter: blur(8px); }
+      .piece .copy { padding: 13px 2px 0; }
+      .piece .line { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+      .piece h2 { margin: 0; font-size: 26px; line-height: 1.04; letter-spacing: -.035em; font-weight: 400; }
+      .piece .line span { flex: none; font-family: var(--mono); font-size: 8.5px; letter-spacing: .3px; color: var(--muted); text-transform: uppercase; }
+      .piece p { margin: 8px 0 0; font-size: 12px; line-height: 1.58; color: #67635a; max-width: 48ch; }
+      .piece .tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 10px; }
+      .piece .tags span { padding: 4px 7px; border: 1px solid var(--hair); border-radius: 999px; font-family: var(--mono); font-size: 8px; letter-spacing: .3px; color: var(--muted); text-transform: uppercase; }
+      .foot { display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap; margin-top: 60px; padding-top: 22px; border-top: 1px solid var(--hair); font-family: var(--mono); font-size: 9.5px; line-height: 1.7; letter-spacing: .3px; color: var(--muted); }
+      .foot a { text-decoration: none; border-bottom: 1px solid var(--hair); }
+      .foot a:hover { border-color: var(--ink); color: var(--ink); }
+      html.embed .mast, html.embed .hero .lead, html.embed .hero .stats, html.embed .filters, html.embed .foot { display: none; }
+      html.embed .page { padding: 0 18px 24px; }
+      html.embed .hero { padding: 24px 0 16px; border-bottom: 0; }
+      html.embed .hero h1 { margin: 10px 0 0; font-size: 42px; letter-spacing: -.05em; }
+      html.embed .hero .eyebrow { font-size: 8px; }
+      html.embed .catalogue { padding-top: 0; }
+      html.embed .grid > .piece:nth-child(n+4) { display: none; }
+      @media (max-width: 980px) {
+        .page { padding: 0 20px 44px; }
+        .hero { padding-top: 54px; }
+        .hero h1 { font-size: clamp(50px, 12vw, 96px); }
+        .mast nav { gap: 13px; }
+        .mast nav a:nth-child(1) { display: none; }
+      }
+
+:root { --accent: #b5452d; }
+
+      .grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+      .piece figure { aspect-ratio: 1 / 1; }
+      .piece p { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+      @media (max-width: 1100px) { .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+      @media (max-width: 760px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; } .piece h2 { font-size: 21px; } }
+      @media (max-width: 480px) { .grid { grid-template-columns: 1fr; } }
+      @media (prefers-reduced-motion: reduce) { .piece figure img { transition: none; } }
+</style>
+</head>
+<body>
+<div class="page">
+  <header class="mast">
+    <div class="brand"><i></i>Frontier</div>
+    <nav><a href="https://bear20252026.github.io/frontier-atlas/">Atlas</a><a href="https://bear20252026.github.io/video-to-game/">Video → Game</a><a href="https://github.com/bear20252026/nodevember">GitHub ↗</a></nav>
+  </header>
+  <main>
+    <section class="hero">
+      <p class="eyebrow">Room 07 · Nodevember · 20 studies · 2026</p>
+      <h1>A prompt<br /><em>a day.</em></h1>
+      <p class="lead">Twenty entries for <b>Nodevember 2026</b>, the November challenge for node-based art. Every piece is procedural: Blender Geometry Nodes, shader nodes, no image textures, no hand modelling.</p>
+      <div class="stats"><span><b>20</b> studies</span><span><b>20</b> prompts</span><span><b>0</b> image textures</span><span>Blender 5.2 → 5.3</span><span>Days 1–8 include <b>.blend</b> + build script</span></div>
+    </section>
+        <section class="catalogue" id="catalogue">
+      <div class="filters">
+        <label class="search"><input id="nq" type="search" placeholder="Search the 20 studies…" autocomplete="off" /></label>
+        <span class="count" id="ncount">20 studies</span>
+      </div>
+      <div class="grid" id="studies">
+        <a class="piece" href="2026/day01-origami/loop.mp4" data-text="origami paper plane a sheet of washi paper folds itself into a paper plane and glides off the stack. the sheet underneath is already waiting, so the loop is seamless.">
+          <figure>
+            <img src="2026/day01-origami/_still_160.png" alt="Paper plane — Origami" loading="lazy" decoding="async" />
+            <video muted loop playsinline preload="none" poster="2026/day01-origami/_still_160.png" aria-hidden="true"><source src="2026/day01-origami/loop.mp4" type="video/mp4" /></video>
+            <span class="no">01</span>
+            <span class="play">Loop ↗</span>
+          </figure>
+          <div class="copy">
+            <div class="line"><h2>Paper plane</h2><span>Origami</span></div>
+            <p>A sheet of washi paper folds itself into a paper plane and glides off the stack. The sheet underneath is already waiting, so the loop is seamless.</p>
+            <div class="tags"><span>Geometry Nodes</span><span>Blender 5.2</span><span>8-second loop</span></div>
+          </div>
+        </a>
+        <a class="piece" href="2026/day02-furniture-v3-corner/loop.mp4" data-text="furniture a day in the corner a reading corner lit by one window. in ten seconds the sun crosses the room, the lamp clicks on at blue hour, the moon comes through, and morning returns.">
+          <figure>
+            <img src="2026/day02-furniture-v3-corner/_still_076.png" alt="A day in the corner — Furniture" loading="lazy" decoding="async" />
+            <video muted loop playsinline preload="none" poster="2026/day02-furniture-v3-corner/_still_076.png" aria-hidden="true"><source src="2026/day02-furniture-v3-corner/loop.mp4" type="video/mp4" /></video>
+            <span class="no">02</span>
+            <span class="play">Loop ↗</span>
+          </figure>
+          <div class="copy">
+            <div class="line"><h2>A day in the corner</h2><span>Furniture</span></div>
+            <p>A reading corner lit by one window. In ten seconds the sun crosses the room, the lamp clicks on at blue hour, the moon comes through, and morning returns.</p>
+            <div class="tags"><span>Geometry Nodes</span><span>Blender 5.2</span><span>10-second loop</span></div>
+          </div>
+        </a>
+        <a class="piece" href="2026/day03-stitch-v3-kintsugi/loop.mp4" data-text="stitch kintsugi an old cream tea bowl breaks along its gold seams, then the shards are glued back with black urushi lacquer and gold flows down every crack.">
+          <figure>
+            <img src="2026/day03-stitch-v3-kintsugi/_still_128.png" alt="Kintsugi — Stitch" loading="lazy" decoding="async" />
+            <video muted loop playsinline preload="none" poster="2026/day03-stitch-v3-kintsugi/_still_128.png" aria-hidden="true"><source src="2026/day03-stitch-v3-kintsugi/loop.mp4" type="video/mp4" /></video>
+            <span class="no">03</span>
+            <span class="play">Loop ↗</span>
+          </figure>
+          <div class="copy">
+            <div class="line"><h2>Kintsugi</h2><span>Stitch</span></div>
+            <p>An old cream tea bowl breaks along its gold seams, then the shards are glued back with black urushi lacquer and gold flows down every crack.</p>
+            <div class="tags"><span>Geometry Nodes</span><span>Blender 5.2</span><span>Seamless loop</span></div>
+          </div>
+        </a>
+        <a class="piece" href="2026/day04-brass-v2-chladni/loop.mp4" data-text="brass chladni sand on a brass plate finds the nodal lines of four rising tones, then leaps and settles into lace as the frequency changes.">
+          <figure>
+            <img src="2026/day04-brass-v2-chladni/render.png" alt="Chladni — Brass" loading="lazy" decoding="async" />
+            <video muted loop playsinline preload="none" poster="2026/day04-brass-v2-chladni/render.png" aria-hidden="true"><source src="2026/day04-brass-v2-chladni/loop.mp4" type="video/mp4" /></video>
+            <span class="no">04</span>
+            <span class="play">Loop ↗</span>
+          </figure>
+          <div class="copy">
+            <div class="line"><h2>Chladni</h2><span>Brass</span></div>
+            <p>Sand on a brass plate finds the nodal lines of four rising tones, then leaps and settles into lace as the frequency changes.</p>
+            <div class="tags"><span>Geometry Nodes</span><span>Blender 5.2</span><span>One standing-wave formula</span></div>
+          </div>
+        </a>
+        <a class="piece" href="2026/day05-clockwork-v3-musicbox/loop_sound.mp4" data-text="clockwork four-season music box a wind-up music box whose stage makes one turn per loop, and that turn is one year: snow, blossom, leaf, fruit, leaf-fall, snow.">
+          <figure>
+            <img src="2026/day05-clockwork-v3-musicbox/_still_090.png" alt="Four-season music box — Clockwork" loading="lazy" decoding="async" />
+            <video muted loop playsinline preload="none" poster="2026/day05-clockwork-v3-musicbox/_still_090.png" aria-hidden="true"><source src="2026/day05-clockwork-v3-musicbox/loop_sound.mp4" type="video/mp4" /></video>
+            <span class="no">05</span>
+            <span class="play">Loop ↗</span>
+          </figure>
+          <div class="copy">
+            <div class="line"><h2>Four-season music box</h2><span>Clockwork</span></div>
+            <p>A wind-up music box whose stage makes one turn per loop, and that turn is one year: snow, blossom, leaf, fruit, leaf-fall, snow.</p>
+            <div class="tags"><span>Geometry Nodes</span><span>Blender 5.2</span><span>Loop with sound</span></div>
+          </div>
+        </a>
+        <a class="piece" href="2026/day06-vault-v5-rouen/color/loop.mp4" data-text="vault rouen nave you lie on the floor of rouen cathedral and look up as you walk toward the rose window; the nave slides back one bay per loop.">
+          <figure>
+            <img src="2026/day06-vault-v5-rouen/render.png" alt="Rouen nave — Vault" loading="lazy" decoding="async" />
+            <video muted loop playsinline preload="none" poster="2026/day06-vault-v5-rouen/render.png" aria-hidden="true"><source src="2026/day06-vault-v5-rouen/color/loop.mp4" type="video/mp4" /></video>
+            <span class="no">06</span>
+            <span class="play">Loop ↗</span>
+          </figure>
+          <div class="copy">
+            <div class="line"><h2>Rouen nave</h2><span>Vault</span></div>
+            <p>You lie on the floor of Rouen Cathedral and look up as you walk toward the rose window; the nave slides back one bay per loop.</p>
+            <div class="tags"><span>Geometry Nodes</span><span>Blender 5.2</span><span>Cycles + EEVEE</span></div>
+          </div>
+        </a>
+        <a class="piece" href="2026/day07-tree-v6-supertree/awakening.mp4" data-text="tree after the rain — supertree eleven steel trees in an imagined singapore garden at blue hour. after the rain the garden wakes, light rising tree by tree through the canopies.">
+          <figure>
+            <img src="2026/day07-tree-v6-supertree/render.png" alt="After the rain — Supertree — Tree" loading="lazy" decoding="async" />
+            <video muted loop playsinline preload="none" poster="2026/day07-tree-v6-supertree/render.png" aria-hidden="true"><source src="2026/day07-tree-v6-supertree/awakening.mp4" type="video/mp4" /></video>
+            <span class="no">07</span>
+            <span class="play">Loop ↗</span>
+          </figure>
+          <div class="copy">
+            <div class="line"><h2>After the rain — Supertree</h2><span>Tree</span></div>
+            <p>Eleven steel trees in an imagined Singapore garden at blue hour. After the rain the garden wakes, light rising tree by tree through the canopies.</p>
+            <div class="tags"><span>Geometry Nodes</span><span>Blender 5.2</span><span>One-shot 8 sec</span></div>
+          </div>
+        </a>
+        <a class="piece" href="2026/day08-mycelium-v5-fingertip/loop.mp4" data-text="mycelium fingertip a weathered stone hand points one finger at the sky; white hyphae climb the stone and a bonnet mushroom grows on the tip.">
+          <figure>
+            <img src="2026/day08-mycelium-v5-fingertip/render.png" alt="Fingertip — Mycelium" loading="lazy" decoding="async" />
+            <video muted loop playsinline preload="none" poster="2026/day08-mycelium-v5-fingertip/render.png" aria-hidden="true"><source src="2026/day08-mycelium-v5-fingertip/loop.mp4" type="video/mp4" /></video>
+            <span class="no">08</span>
+            <span class="play">Loop ↗</span>
+          </figure>
+          <div class="copy">
+            <div class="line"><h2>Fingertip</h2><span>Mycelium</span></div>
+            <p>A weathered stone hand points one finger at the sky; white hyphae climb the stone and a bonnet mushroom grows on the tip.</p>
+            <div class="tags"><span>Geometry Nodes</span><span>Blender 5.2</span><span>15-second growth</span></div>
+          </div>
+        </a>
+        <a class="piece" href="2026/day09-winged-v5-solo/loop.mp4" data-text="winged solo one silver maple key spins down through low sun, and the camera falls with it; the key is a single closed surface with real veins.">
+          <figure>
+            <img src="2026/day09-winged-v5-solo/render.png" alt="Solo — Winged" loading="lazy" decoding="async" />
+            <video muted loop playsinline preload="none" poster="2026/day09-winged-v5-solo/render.png" aria-hidden="true"><source src="2026/day09-winged-v5-solo/loop.mp4" type="video/mp4" /></video>
+            <span class="no">09</span>
+            <span class="play">Loop ↗</span>
+          </figure>
+          <div class="copy">
+            <div class="line"><h2>Solo</h2><span>Winged</span></div>
+            <p>One silver maple key spins down through low sun, and the camera falls with it; the key is a single closed surface with real veins.</p>
+            <div class="tags"><span>Geometry Nodes</span><span>Blender 5.2</span><span>12-second loop</span></div>
+          </div>
+        </a>
+        <a class="piece" href="2026/day10-geode-v2-generator/sweep/loop.mp4" data-text="geode geode generator a sawn geode on a black studio floor, and the one geometry nodes group that grows it: agate bands, crystal rays and seven sliders.">
+          <figure>
+            <img src="2026/day10-geode-v2-generator/render.png" alt="Geode generator — Geode" loading="lazy" decoding="async" />
+            <video muted loop playsinline preload="none" poster="2026/day10-geode-v2-generator/render.png" aria-hidden="true"><source src="2026/day10-geode-v2-generator/sweep/loop.mp4" type="video/mp4" /></video>
+            <span class="no">10</span>
+            <span class="play">Loop ↗</span>
+          </figure>
+          <div class="copy">
+            <div class="line"><h2>Geode generator</h2><span>Geode</span></div>
+            <p>A sawn geode on a black studio floor, and the one Geometry Nodes group that grows it: agate bands, crystal rays and seven sliders.</p>
+            <div class="tags"><span>Geometry Nodes</span><span>Blender 5.2</span><span>Six classic kinds</span></div>
+          </div>
+        </a>
+        <a class="piece" href="2026/day11-cavernous-v8-canal/loop.mp4" data-text="cavernous flooded geode canal a small boat with a lantern drifts down a chain of giant flooded geodes; each hall is a function of its number alone.">
+          <figure>
+            <img src="2026/day11-cavernous-v8-canal/render.png" alt="Flooded geode canal — Cavernous" loading="lazy" decoding="async" />
+            <video muted loop playsinline preload="none" poster="2026/day11-cavernous-v8-canal/render.png" aria-hidden="true"><source src="2026/day11-cavernous-v8-canal/loop.mp4" type="video/mp4" /></video>
+            <span class="no">11</span>
+            <span class="play">Loop ↗</span>
+          </figure>
+          <div class="copy">
+            <div class="line"><h2>Flooded geode canal</h2><span>Cavernous</span></div>
+            <p>A small boat with a lantern drifts down a chain of giant flooded geodes; each hall is a function of its number alone.</p>
+            <div class="tags"><span>Geometry Nodes</span><span>Blender 5.2</span><span>34-second video</span></div>
+          </div>
+        </a>
+        <a class="piece" href="2026/day12-erosion-v3-sugar-cube/loop.mp4" data-text="erosion sugar cube nine drops of tea fall on a sugar cube on a white saucer, lit from behind; the cube dissolves into a ragged ring of brown crystals.">
+          <figure>
+            <img src="2026/day12-erosion-v3-sugar-cube/render.png" alt="Sugar cube — Erosion" loading="lazy" decoding="async" />
+            <video muted loop playsinline preload="none" poster="2026/day12-erosion-v3-sugar-cube/render.png" aria-hidden="true"><source src="2026/day12-erosion-v3-sugar-cube/loop.mp4" type="video/mp4" /></video>
+            <span class="no">12</span>
+            <span class="play">Loop ↗</span>
+          </figure>
+          <div class="copy">
+            <div class="line"><h2>Sugar cube</h2><span>Erosion</span></div>
+            <p>Nine drops of tea fall on a sugar cube on a white saucer, lit from behind; the cube dissolves into a ragged ring of brown crystals.</p>
+            <div class="tags"><span>Geometry Nodes</span><span>Blender 5.2</span><span>One Age slider</span></div>
+          </div>
+        </a>
+        <a class="piece" href="2026/day13-dune-v2-sandworm/loop.mp4" data-text="dune sandworm a colossal worm stands out of an orange dune, its round maw lined with thousands of fine needles turned to the camera.">
+          <figure>
+            <img src="2026/day13-dune-v2-sandworm/render.png" alt="Sandworm — Dune" loading="lazy" decoding="async" />
+            <video muted loop playsinline preload="none" poster="2026/day13-dune-v2-sandworm/render.png" aria-hidden="true"><source src="2026/day13-dune-v2-sandworm/loop.mp4" type="video/mp4" /></video>
+            <span class="no">13</span>
+            <span class="play">Loop ↗</span>
+          </figure>
+          <div class="copy">
+            <div class="line"><h2>Sandworm</h2><span>Dune</span></div>
+            <p>A colossal worm stands out of an orange dune, its round maw lined with thousands of fine needles turned to the camera.</p>
+            <div class="tags"><span>Geometry Nodes</span><span>Blender 5.2</span><span>6-second loop</span></div>
+          </div>
+        </a>
+        <a class="piece" href="2026/day14-shell-v1-morphospace/loop.mp4" data-text="shell one tube, every shell a chambered nautilus melts into an ammonite, a garden snail, a tower shell, a textile cone, a conch and a cockle, ending on abalone.">
+          <figure>
+            <img src="2026/day14-shell-v1-morphospace/render.png" alt="One tube, every shell — Shell" loading="lazy" decoding="async" />
+            <video muted loop playsinline preload="none" poster="2026/day14-shell-v1-morphospace/render.png" aria-hidden="true"><source src="2026/day14-shell-v1-morphospace/loop.mp4" type="video/mp4" /></video>
+            <span class="no">14</span>
+            <span class="play">Loop ↗</span>
+          </figure>
+          <div class="copy">
+            <div class="line"><h2>One tube, every shell</h2><span>Shell</span></div>
+            <p>A chambered nautilus melts into an ammonite, a garden snail, a tower shell, a textile cone, a conch and a cockle, ending on abalone.</p>
+            <div class="tags"><span>Geometry Nodes</span><span>Blender 5.2</span><span>Eight shells · one group</span></div>
+          </div>
+        </a>
+        <a class="piece" href="2026/day15-pearl-v2-nacre-dive/loop.mp4" data-text="pearl nacre dive one camera move from a whole tahitian pearl down to the terraces of aragonite tablets its lustre comes from, and back out.">
+          <figure>
+            <img src="2026/day15-pearl-v2-nacre-dive/render.png" alt="Nacre dive — Pearl" loading="lazy" decoding="async" />
+            <video muted loop playsinline preload="none" poster="2026/day15-pearl-v2-nacre-dive/render.png" aria-hidden="true"><source src="2026/day15-pearl-v2-nacre-dive/loop.mp4" type="video/mp4" /></video>
+            <span class="no">15</span>
+            <span class="play">Loop ↗</span>
+          </figure>
+          <div class="copy">
+            <div class="line"><h2>Nacre dive</h2><span>Pearl</span></div>
+            <p>One camera move from a whole Tahitian pearl down to the terraces of aragonite tablets its lustre comes from, and back out.</p>
+            <div class="tags"><span>Geometry Nodes</span><span>Blender 5.2</span><span>Macro dive</span></div>
+          </div>
+        </a>
+        <a class="piece" href="2026/day16-wave-v1-comb-jelly/loop.mp4" data-text="wave comb jelly a sea gooseberry hangs in black water, then swims: eight comb rows beat one paddle after another, scattering light into flecks of colour.">
+          <figure>
+            <img src="2026/day16-wave-v1-comb-jelly/render.png" alt="Comb jelly — Wave" loading="lazy" decoding="async" />
+            <video muted loop playsinline preload="none" poster="2026/day16-wave-v1-comb-jelly/render.png" aria-hidden="true"><source src="2026/day16-wave-v1-comb-jelly/loop.mp4" type="video/mp4" /></video>
+            <span class="no">16</span>
+            <span class="play">Loop ↗</span>
+          </figure>
+          <div class="copy">
+            <div class="line"><h2>Comb jelly</h2><span>Wave</span></div>
+            <p>A sea gooseberry hangs in black water, then swims: eight comb rows beat one paddle after another, scattering light into flecks of colour.</p>
+            <div class="tags"><span>Geometry Nodes</span><span>Blender 5.2</span><span>192 plates</span></div>
+          </div>
+        </a>
+        <a class="piece" href="2026/day17-caustics-v3-cut-glass/loop.mp4" data-text="caustics five cuts of light a cut-crystal decanter turns under one low sun while its cut morphs through five classic patterns of cut and pressed glass.">
+          <figure>
+            <img src="2026/day17-caustics-v3-cut-glass/render.png" alt="Five cuts of light — Caustics" loading="lazy" decoding="async" />
+            <video muted loop playsinline preload="none" poster="2026/day17-caustics-v3-cut-glass/render.png" aria-hidden="true"><source src="2026/day17-caustics-v3-cut-glass/loop.mp4" type="video/mp4" /></video>
+            <span class="no">17</span>
+            <span class="play">Loop ↗</span>
+          </figure>
+          <div class="copy">
+            <div class="line"><h2>Five cuts of light</h2><span>Caustics</span></div>
+            <p>A cut-crystal decanter turns under one low sun while its cut morphs through five classic patterns of cut and pressed glass.</p>
+            <div class="tags"><span>Geometry Nodes</span><span>Blender 5.3</span><span>6.4M rays per frame</span></div>
+          </div>
+        </a>
+        <a class="piece" href="2026/day18-prism-v3-opgrid/loop.mp4" data-text="prism twisted prism wall twenty-eight tall glass bars with a triangular section twist in a travelling wave, splitting one hidden slit into ribbons of colour.">
+          <figure>
+            <img src="2026/day18-prism-v3-opgrid/render.png" alt="Twisted prism wall — Prism" loading="lazy" decoding="async" />
+            <video muted loop playsinline preload="none" poster="2026/day18-prism-v3-opgrid/render.png" aria-hidden="true"><source src="2026/day18-prism-v3-opgrid/loop.mp4" type="video/mp4" /></video>
+            <span class="no">18</span>
+            <span class="play">Loop ↗</span>
+          </figure>
+          <div class="copy">
+            <div class="line"><h2>Twisted prism wall</h2><span>Prism</span></div>
+            <p>Twenty-eight tall glass bars with a triangular section twist in a travelling wave, splitting one hidden slit into ribbons of colour.</p>
+            <div class="tags"><span>Geometry Nodes</span><span>Blender 5.3</span><span>One 28-node tree</span></div>
+          </div>
+        </a>
+        <a class="piece" href="2026/day19-shimmer-v2-sundogs/loop.mp4" data-text="shimmer diamond dust sunrise on a frozen lake, with a sun pillar, two sun dogs, an upper tangent arc and a 22° halo, every halo ray-traced in geometry nodes.">
+          <figure>
+            <img src="2026/day19-shimmer-v2-sundogs/render.png" alt="Diamond dust — Shimmer" loading="lazy" decoding="async" />
+            <video muted loop playsinline preload="none" poster="2026/day19-shimmer-v2-sundogs/render.png" aria-hidden="true"><source src="2026/day19-shimmer-v2-sundogs/loop.mp4" type="video/mp4" /></video>
+            <span class="no">19</span>
+            <span class="play">Loop ↗</span>
+          </figure>
+          <div class="copy">
+            <div class="line"><h2>Diamond dust</h2><span>Shimmer</span></div>
+            <p>Sunrise on a frozen lake, with a sun pillar, two sun dogs, an upper tangent arc and a 22° halo, every halo ray-traced in Geometry Nodes.</p>
+            <div class="tags"><span>Geometry Nodes</span><span>Blender 5.3</span><span>9M rays per frame</span></div>
+          </div>
+        </a>
+        <a class="piece" href="2026/day20-smoke-v10-cream-plume/loop.mp4" data-text="smoke cream plume macro close-up of dense ivory cream billowing into warm rose-tinted water, solved with a navier–stokes grid built inside geometry nodes.">
+          <figure>
+            <img src="2026/day20-smoke-v10-cream-plume/render.png" alt="Cream plume — Smoke" loading="lazy" decoding="async" />
+            <video muted loop playsinline preload="none" poster="2026/day20-smoke-v10-cream-plume/render.png" aria-hidden="true"><source src="2026/day20-smoke-v10-cream-plume/loop.mp4" type="video/mp4" /></video>
+            <span class="no">20</span>
+            <span class="play">Loop ↗</span>
+          </figure>
+          <div class="copy">
+            <div class="line"><h2>Cream plume</h2><span>Smoke</span></div>
+            <p>Macro close-up of dense ivory cream billowing into warm rose-tinted water, solved with a Navier–Stokes grid built inside Geometry Nodes.</p>
+            <div class="tags"><span>Geometry Nodes</span><span>Blender 5.3</span><span>3-second bloom</span></div>
+          </div>
+        </a>
+      </div>
+    </section>
+    <script>
+      (() => {
+        const cards = [...document.querySelectorAll('#studies .piece')];
+        const q = document.getElementById('nq');
+        const count = document.getElementById('ncount');
+        const videos = cards.map((card) => card.querySelector('video'));
+        q.addEventListener('input', () => {
+          const term = q.value.trim().toLowerCase();
+          let shown = 0;
+          for (const card of cards) {
+            const ok = !term || (card.dataset.text || '').includes(term);
+            card.style.display = ok ? '' : 'none';
+            if (ok) shown++;
+          }
+          count.textContent = shown + (shown === 1 ? ' study' : ' studies');
+        });
+        for (const card of cards) {
+          const video = card.querySelector('video');
+          if (!video) continue;
+          card.addEventListener('pointerenter', () => {
+            video.style.opacity = '1';
+            video.play().catch(() => {});
+          });
+          card.addEventListener('pointerleave', () => {
+            video.pause();
+            video.currentTime = 0;
+            video.style.opacity = '0';
+          });
+        }
+      })();
+    </script>
+  </main>
+  <footer class="foot"><span>Nodevember 2026 · 20 procedural studies · built by bear20252026</span><span><a href="https://bear20252026.github.io/frontier-atlas/">Atlas</a> · <a href="https://github.com/bear20252026/nodevember">Source repository ↗</a></span></footer>
+</div>
+</body>
+</html>
