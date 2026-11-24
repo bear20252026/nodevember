@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>07 — hollow</title>
+    <style>
+      html, body { margin: 0; height: 100%; overflow: hidden; background: #d2d1cd; }
+      canvas { display: block; }
+      /* the shapes, a line of small captions under the picture */
+      #shapes { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%); display: flex; align-items: baseline;
+        gap: 0.2em; white-space: nowrap; font: italic 14px Georgia, 'Times New Roman', serif; letter-spacing: 0.04em; color: #2c2b28; }
+      #shapes button { font: inherit; color: inherit; letter-spacing: inherit; background: none; border: 0;
+        padding: 2px 5px; cursor: pointer; opacity: 0.5; transition: opacity 0.3s; }
+      #shapes button:hover { opacity: 0.8; }
+      #shapes button[aria-pressed='true'] { opacity: 0.95; text-decoration: underline; text-underline-offset: 3px; }
+      #shapes span { opacity: 0.35; }
+      /* while a shape is being cut */
+      .busy #shapes button[aria-pressed='true'] { animation: busy 0.9s ease-in-out infinite alternate; }
+      @keyframes busy { to { opacity: 0.3; } }
+    </style>
+  </head>
+  <body>
+    <nav id="shapes" aria-label="shape"></nav>
+    <!-- lets the folder run as-is on any static server, without the vite build;
+         keep the version in sync with package.json -->
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+          "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+        }
+      }
+    </script>
+    <script type="module" src="./main.js"></script>
+  </body>
+</html>

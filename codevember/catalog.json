@@ -1,0 +1,359 @@
+{
+  "source": "paper-widgets",
+  "challenge": "Codevember 2026",
+  "note": "Archive moved from paper-widgets to nodevember. Each entry keeps its original credits and licence.",
+  "pieces": [
+    {
+      "id": "codevember-01-fold",
+      "href": "./codevember-01-fold/index.html",
+      "title": "Fold",
+      "section": "codevember",
+      "dataText": "fold a flat grid grown and folded seven times, then cut in two — the halves open like the pages of a book to show their cut faces, soft candy gum in pastel layers. three.js glsl procedurally folded",
+      "copy": "A flat grid grows, folds seven times and is cut in two; the halves open like the pages of a book to show their cut faces. Soft candy gum in pastel layers, and a shadow that falls only on the floor.",
+      "tags": [
+        "three.js",
+        "GLSL",
+        "folded"
+      ],
+      "plate": "plate--scene",
+      "accent": {
+        "a": "#fbf3ea",
+        "b": "#f7a1b5",
+        "m": "rgba(20,20,22,0.38)"
+      },
+      "tier": "workshop",
+      "kind": "study",
+      "note": "A single-prompt WebGL study; the full November sets are on the shelf."
+    },
+    {
+      "id": "codevember-02-shatter",
+      "href": "./codevember-02-shatter/index.html",
+      "title": "Shatter",
+      "section": "codevember",
+      "dataText": "shatter solid volumes of glass, ice, wood, marble, stone, ceramic and obsidian break into fragments; the camera zooms into the core of each and the next volume waits inside. three.js fracture materials",
+      "copy": "Solid volumes of glass, ice, wood, marble, stone, ceramic and obsidian break into fragments; the camera zooms into the core of each, and the next volume is waiting inside.",
+      "tags": [
+        "three.js",
+        "fracture",
+        "materials"
+      ],
+      "plate": "plate--scene",
+      "accent": {
+        "a": "#d2d1cd",
+        "b": "#bcd6e0",
+        "m": "rgba(20,20,22,0.38)"
+      },
+      "tier": "workshop",
+      "kind": "study",
+      "note": "A single-prompt WebGL study; the full November sets are on the shelf."
+    },
+    {
+      "id": "codevember-04-tangle",
+      "href": "./codevember-04-tangle/index.html",
+      "title": "Tangle",
+      "section": "codevember",
+      "dataText": "tangle one growth seen three ways at once, the same views side by side on one camera they share, each generation built from the same seed. three.js growth three views",
+      "copy": "One growth seen three ways at once: the same views side by side, one camera they share, each built from the same seed and growing at the same pace.",
+      "tags": [
+        "three.js",
+        "growth",
+        "three views"
+      ],
+      "plate": "plate--scene",
+      "accent": {
+        "a": "#141311",
+        "b": "#ffe6cc",
+        "m": "rgba(255,255,255,0.55)"
+      },
+      "tier": "workshop",
+      "kind": "study",
+      "note": "A single-prompt WebGL study; the full November sets are on the shelf."
+    },
+    {
+      "id": "codevember-05-moss",
+      "href": "./codevember-05-moss/index.html",
+      "title": "Moss",
+      "section": "codevember",
+      "dataText": "moss a cushion of moss on a boulder: bare soil, then short leafy shoots spreading from a few spots, then long filaments rising and their capsules ripening to orange. three.js growth moss",
+      "copy": "A cushion of moss on a boulder, and two little ones beside it: bare soil, then short leafy shoots spreading from a few spots, then long filaments rising and their capsules ripening to orange.",
+      "tags": [
+        "three.js",
+        "growth",
+        "moss"
+      ],
+      "plate": "plate--scene",
+      "accent": {
+        "a": "#8a9096",
+        "b": "#b8e060",
+        "m": "rgba(255,255,255,0.55)"
+      },
+      "tier": "workshop",
+      "kind": "study",
+      "note": "A single-prompt WebGL study; the full November sets are on the shelf."
+    },
+    {
+      "id": "codevember-06-orrery",
+      "href": "./codevember-06-orrery/index.html",
+      "title": "Orrery",
+      "section": "codevember",
+      "dataText": "orrery a brass orrery in an observatory hall at night, engraved like a voyages extraordinaires plate: the sun is a lamp, the gears turn, the planets go round on their arms. three.js brass orrery texture",
+      "copy": "A brass orrery in an observatory hall at night, engraved like a Voyages Extraordinaires plate: the sun is a lamp, the gears turn in the cage, the planets go round on their arms and cast their shadows.",
+      "tags": [
+        "three.js",
+        "brass",
+        "orrery"
+      ],
+      "plate": "plate--scene",
+      "accent": {
+        "a": "#e9d8b4",
+        "b": "#7a5a2a",
+        "m": "rgba(20,20,22,0.38)"
+      },
+      "tier": "workshop",
+      "kind": "study",
+      "note": "A single-prompt WebGL study; the full November sets are on the shelf."
+    },
+    {
+      "id": "codevember-07-hollow",
+      "href": "./codevember-07-hollow/index.html",
+      "title": "Hollow",
+      "section": "codevember",
+      "dataText": "hollow a hollow marble sphere split along noise seams, each part framed in brass: thrown apart, it rebuilds itself, and hovered parts fly off for good. three.js marble fracture",
+      "copy": "A hollow sphere of marble, split along seams where a noise crosses a threshold, each part framed in brass: it starts thrown apart and rebuilds itself; hovered parts fly off for good.",
+      "tags": [
+        "three.js",
+        "marble",
+        "fracture"
+      ],
+      "plate": "plate--scene",
+      "accent": {
+        "a": "#d2d1cd",
+        "b": "#c8b07a",
+        "m": "rgba(20,20,22,0.38)"
+      },
+      "tier": "workshop",
+      "kind": "study",
+      "note": "A single-prompt WebGL study; the full November sets are on the shelf."
+    },
+    {
+      "id": "codevember-09-membrane",
+      "href": "./codevember-09-membrane/index.html",
+      "title": "Membrane",
+      "section": "codevember",
+      "dataText": "membrane a slice of a life form under the microscope — jelly blocks with dark cores, a marbled fluid, a nucleus and vesicles — and then its death. three.js shader microscopy",
+      "copy": "A slice of a life form under the microscope — jelly blocks with small dark cores between two blurry films, a marbled fluid, a nucleus and vesicles — and then its death.",
+      "tags": [
+        "three.js",
+        "shader",
+        "microscopy"
+      ],
+      "plate": "plate--scene",
+      "accent": {
+        "a": "#eceeef",
+        "b": "#f0c4c4",
+        "m": "rgba(20,20,22,0.38)"
+      },
+      "tier": "workshop",
+      "kind": "study",
+      "note": "A single-prompt WebGL study; the full November sets are on the shelf."
+    },
+    {
+      "id": "codevember-10-caustics",
+      "href": "./codevember-10-caustics/index.html",
+      "title": "Caustics",
+      "section": "codevember",
+      "dataText": "caustics caustics as the path of light in a diorama: a glass tank on a wooden shelf, sand and water, grains of light falling and bending through the waves. three.js light diorama",
+      "copy": "Caustics as the path of light in a diorama: a long, shallow glass tank on a thick wooden shelf, a block of sand with water over it, grains of light falling and bending through the waves.",
+      "tags": [
+        "three.js",
+        "light",
+        "diorama"
+      ],
+      "plate": "plate--scene",
+      "accent": {
+        "a": "#b9b6b0",
+        "b": "#2f6b86",
+        "m": "rgba(20,20,22,0.38)"
+      },
+      "tier": "workshop",
+      "kind": "study",
+      "note": "A single-prompt WebGL study; the full November sets are on the shelf."
+    },
+    {
+      "id": "codevember-12-feather",
+      "href": "./codevember-12-feather/index.html",
+      "title": "Feather",
+      "section": "codevember",
+      "dataText": "feather a small creature under a coat of simulated feathers, a mass on springs: pick it up, shake it, throw it, and it lands on its legs. three.js feathers springs",
+      "copy": "A small creature under a coat of feathers simulated one by one: pick it up, shake it, throw it, and it lands on its legs; left alone it fluffs and shakes its coat.",
+      "tags": [
+        "three.js",
+        "feathers",
+        "springs"
+      ],
+      "plate": "plate--scene",
+      "accent": {
+        "a": "#cdc6bc",
+        "b": "#d8692a",
+        "m": "rgba(20,20,22,0.38)"
+      },
+      "tier": "workshop",
+      "kind": "study",
+      "note": "A single-prompt WebGL study; the full November sets are on the shelf."
+    },
+    {
+      "id": "codevember-14-tension",
+      "href": "./codevember-14-tension/index.html",
+      "title": "Tension",
+      "section": "codevember",
+      "dataText": "tension a rope stretched top to bottom about to snap, five of six strands broken and the last one holding, the view zooming into the same rope again and again. three.js rope sound",
+      "copy": "A rope stretched top to bottom, about to snap: five of its six strands have broken and the last one, untwisted into the middle, holds across the gap. The view zooms in and finds the same rope again, a third the size — and so on, forever.",
+      "tags": [
+        "three.js",
+        "rope",
+        "sound"
+      ],
+      "plate": "plate--scene",
+      "accent": {
+        "a": "#121013",
+        "b": "#c25a32",
+        "m": "rgba(255,255,255,0.55)"
+      },
+      "tier": "workshop",
+      "kind": "study",
+      "note": "A single-prompt WebGL study; the full November sets are on the shelf."
+    },
+    {
+      "id": "codevember-17-kelp",
+      "href": "./codevember-17-kelp/index.html",
+      "title": "Kelp",
+      "section": "codevember",
+      "dataText": "kelp a sea floor to draw kelp on, every stipe and blade a chain of joints pulled by buoyancy and the current, the pointer's wake included. three.js kelp water",
+      "copy": "A sea floor to draw kelp on: every stipe and blade is a chain of joints pulled by buoyancy and the current, the pointer's wake included. The wells on the left pick the kind.",
+      "tags": [
+        "three.js",
+        "kelp",
+        "water"
+      ],
+      "plate": "plate--scene",
+      "accent": {
+        "a": "#062330",
+        "b": "#5f9e6a",
+        "m": "rgba(255,255,255,0.55)"
+      },
+      "tier": "workshop",
+      "kind": "study",
+      "note": "A single-prompt WebGL study; the full November sets are on the shelf."
+    },
+    {
+      "id": "codevember-21-bolt",
+      "href": "./codevember-21-bolt/index.html",
+      "title": "Bolt",
+      "section": "codevember",
+      "dataText": "bolt a diorama of a thunderstorm on a block of meadow, a bolt of lightning held at the instant it touches the ground, while the clouds roll and the rain falls. three.js lightning storm",
+      "copy": "A diorama of a thunderstorm: on a block of meadow, its soil layers showing over a wooden base, a bolt of lightning strikes and is held at the instant it touches the ground. Only the bolt is still; the clouds roll and the rain keeps falling.",
+      "tags": [
+        "three.js",
+        "lightning",
+        "storm"
+      ],
+      "plate": "plate--scene",
+      "accent": {
+        "a": "#0a0a0b",
+        "b": "#b9b2d6",
+        "m": "rgba(255,255,255,0.6)"
+      },
+      "tier": "workshop",
+      "kind": "study",
+      "note": "A single-prompt WebGL study; the full November sets are on the shelf."
+    },
+    {
+      "id": "codevember-2026",
+      "href": "./codevember-2026/index.html",
+      "title": "Codevember 2026",
+      "section": "codevember",
+      "dataText": "codevember 2026 mrdoob's whole november as the repository keeps it: seventeen days, each a folder of es modules beside the gallery that links them — a sheet folding, glass shattering, wax melting, threads tangling, moss growing, a brass orrery, a neon tesseract, a snowbound maze, steel chains under tension, sandstone eroded into mirage, a kelp forest. webgpu tsl mit",
+      "copy": "mrdoob's whole November as the repository keeps it: seventeen days, each a folder of ES modules beside the gallery that links them — a sheet folding, a neon tesseract, a snowbound maze, steel chains under tension, sandstone eroded into mirage. WebGPU, MIT.",
+      "tags": [
+        "WebGPU",
+        "TSL",
+        "MIT"
+      ],
+      "plate": "plate--scene",
+      "accent": {
+        "a": "#101014",
+        "b": "#5a68ff",
+        "m": "rgba(255,255,255,0.6)"
+      },
+      "tier": "shelf",
+      "kind": "finished",
+      "note": ""
+    },
+    {
+      "id": "codevember-loktar00",
+      "href": "./codevember-loktar00/index.html",
+      "title": "Stepping Stones",
+      "section": "codevember",
+      "dataText": "stepping stones codevember loktar00 moss a fox hopping forever across five floating, moss-covered rock islands at golden hour — cushion moss, backlit grass, soft contact shadows, a filmic grade and synthesized ambient sound. three.js sound",
+      "copy": "loktar00's Codevember piece for the prompt moss: a fox hopping forever across five floating, moss-covered rock islands at golden hour — cushion moss, backlit grass, soft contact shadows and synthesized ambience. Click for sound.",
+      "tags": [
+        "three.js",
+        "moss",
+        "sound"
+      ],
+      "plate": "plate--scene",
+      "accent": {
+        "a": "#0b0c10",
+        "b": "#d9c187",
+        "m": "rgba(255,255,255,0.55)"
+      },
+      "tier": "workshop",
+      "kind": "study",
+      "note": "One prompt from loktar00, kept beside the full November sets."
+    },
+    {
+      "id": "codevember-akella",
+      "href": "./codevember-akella/index.html",
+      "title": "Codevember 2026 — Eighteen Days",
+      "section": "codevember",
+      "dataText": "codevember 2026 — eighteen days yuri artiukh's repository of the november prompts: eighteen days, each a folder with its own dependencies and its own vite build — a sheet folding, glass shattering, wax melting, a brass orrery, a maze, rust, a mirage, a spore, a kelp forest and a pendulum — with the build files and baked assets they were made from. three.js vite 18 days",
+      "copy": "Yuri Artiukh's repository of the November prompts: eighteen days, each a folder with its own dependencies and its own Vite build — a sheet folding, glass shattering, wax melting, a brass orrery, a maze, rust, a mirage, a spore, a kelp forest and a pendulum — with the build files and baked assets they were made from.",
+      "tags": [
+        "three.js",
+        "Vite",
+        "18 days"
+      ],
+      "plate": "plate--scene",
+      "accent": {
+        "a": "#0d0d10",
+        "b": "#e6ded0",
+        "m": "rgba(255,255,255,0.55)"
+      },
+      "tier": "shelf",
+      "kind": "finished",
+      "note": ""
+    },
+    {
+      "id": "codevember-curllmooha",
+      "href": "./codevember-curllmooha/dist/index.html",
+      "title": "Codevember 2026 — Twenty-Three Days",
+      "section": "codevember",
+      "dataText": "codevember 2026 — twenty-three days curllmooha vipin pathak twenty-three deployed webgpu prompts: a sheet folding forever, a launcher cracking a volume, three scoops melting, wool tangling, moss and marbles, a gravity well orrery, a hollow earth, a sapphire tesseract, a membrane, acid etching, rust, a feathered creature, an ant labyrinth, dew lit webs, a dune mirage, a mushroom, a kelp forest, perfect pendulums, live erosion, a maple lantern, a lightning strike, an echo in a cave, a magma flow. editable vite project",
+      "copy": "curllmooha's deployed set: twenty-three of the thirty WebGPU prompts, each a scene with its own live controls, textures, models and sound — a sheet folding forever, a launcher cracking a volume, three scoops melting, wool tangling, a gravity-well orrery, a hollow Earth, a kelp forest, a maple lantern, a lightning strike, a cave of echoes and a magma flow. Recovered from the public Vite bundle into an editable multi-page project; days 24–30 were not published.",
+      "tags": [
+        "WebGPU",
+        "Vite",
+        "23 days"
+      ],
+      "plate": "plate--scene",
+      "accent": {
+        "a": "#a9def8",
+        "b": "#ffe02e",
+        "m": "rgba(20,20,22,0.38)"
+      },
+      "tier": "shelf",
+      "kind": "finished",
+      "note": ""
+    }
+  ]
+}

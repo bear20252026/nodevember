@@ -1,0 +1,13 @@
+Rock scans from Poly Haven, licensed CC0 1.0 (public domain).
+
+Boulder 01 — Rico Cilliers
+https://polyhaven.com/a/boulder_01
+
+Rock 07 — Jenelle van Heerden
+https://polyhaven.com/a/rock_07
+
+License: https://creativecommons.org/publicdomain/zero/1.0/
+
+Geometry and 2K diffuse, OpenGL normal, and AO/roughness/metalness maps
+downloaded from Poly Haven. Maps are stored as WebP for delivery; geometry is
+centered and normalized at runtime.

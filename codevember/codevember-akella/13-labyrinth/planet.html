@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>labyrinth: planet</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      body {
+        background: #c98f86;
+      }
+      canvas {
+        display: block;
+        cursor: grab;
+      }
+      /* the two pages, to switch between */
+      .pages {
+        position: fixed;
+        top: 12px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 10;
+        display: flex;
+        gap: 4px;
+        padding: 4px;
+        border-radius: 999px;
+        background: rgba(60, 30, 34, 0.28);
+        backdrop-filter: blur(6px);
+        font: 500 13px/1 system-ui, -apple-system, sans-serif;
+        letter-spacing: 0.02em;
+      }
+      .pages a {
+        padding: 7px 14px;
+        border-radius: 999px;
+        color: #fff4ee;
+        text-decoration: none;
+        opacity: 0.75;
+      }
+      .pages a:hover {
+        opacity: 1;
+      }
+      .pages a[aria-current="page"] {
+        background: rgba(255, 244, 238, 0.9);
+        color: #6b2a33;
+        opacity: 1;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="pages"><a href="./">stairs</a><a href="./planet.html" aria-current="page">planet</a></div>
+    <script type="module" src="./src/planet/index.ts"></script>
+  </body>
+</html>

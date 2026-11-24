@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#b99b79">
+    <meta name="description" content="Mirage. A procedurally eroded sandstone world, rendered with WebGPU meshlets.">
+    <title>Codevember 2026 / 15 / Mirage</title>
+    <link rel="canonical" href="https://mrdoob.github.io/codevember-2026/15/">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Codevember 2026">
+    <meta property="og:title" content="Codevember 2026 / 15 / Mirage">
+    <meta property="og:description" content="Mirage. A procedurally eroded sandstone world, rendered with WebGPU meshlets.">
+    <meta property="og:url" content="https://mrdoob.github.io/codevember-2026/15/">
+    <meta property="og:image" content="https://mrdoob.github.io/codevember-2026/15/preview.webp">
+    <meta property="og:image:type" content="image/webp">
+    <meta property="og:image:width" content="800">
+    <meta property="og:image:height" content="800">
+    <meta property="og:image:alt" content="A rover exploring sandstone dunes below a marble sanctuary reflected in a desert mirage.">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@mrdoob">
+    <meta name="twitter:title" content="Codevember 2026 / 15 / Mirage">
+    <meta name="twitter:description" content="Mirage. A procedurally eroded sandstone world, rendered with WebGPU meshlets.">
+    <meta name="twitter:image" content="https://mrdoob.github.io/codevember-2026/15/preview.webp">
+    <meta name="twitter:image:alt" content="A rover exploring sandstone dunes below a marble sanctuary reflected in a desert mirage.">
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="style.css">
+    <script type="importmap">
+      {
+        "imports": {
+          "box3d.js/inline": "https://cdn.jsdelivr.net/npm/box3d.js@0.1.1/dist/box3d.inline.mjs",
+          "three": "https://cdn.jsdelivr.net/gh/mrdoob/three.js@4f5d6bc0c7ec777e06703b56c7b7089e99be11d5/build/three.webgpu.js",
+          "three/webgpu": "https://cdn.jsdelivr.net/gh/mrdoob/three.js@4f5d6bc0c7ec777e06703b56c7b7089e99be11d5/build/three.webgpu.js",
+          "three/tsl": "https://cdn.jsdelivr.net/gh/mrdoob/three.js@4f5d6bc0c7ec777e06703b56c7b7089e99be11d5/build/three.tsl.js",
+          "three/addons/": "https://cdn.jsdelivr.net/gh/mrdoob/three.js@4f5d6bc0c7ec777e06703b56c7b7089e99be11d5/examples/jsm/"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <main><canvas tabindex="0" aria-label="Drive a rover through a sandstone landscape toward a sanctuary reflected in a mirage. Touch and drag to drive with a floating joystick. WASD drives and Shift boosts. Drag with a mouse to orbit, scroll to approach. Choose other views in Settings. Space pauses, R resets the view, H hides the interface."></canvas></main>
+    <header><a href="https://mrdoob.github.io/codevember-2026/">CODEVEMBER 2026</a> / 15 / MIRAGE</header>
+    <div id="loading">
+      <div class="loading-content">
+        <div class="loading-caption"><span id="status" role="status">Reading the dunes…</span><span id="loading-number" aria-hidden="true">0%</span></div>
+        <div id="loading-progress" role="progressbar" aria-label="Loading Mirage" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div id="loading-fill"></div></div>
+      </div>
+    </div>
+    <div id="rover-hud" aria-label="Rover speed" hidden><span id="rover-speed">0 KM/H</span></div>
+    <div id="daylight" role="group" aria-label="Time of day">
+      <button type="button" data-time="Dawn" aria-pressed="false">Dawn</button>
+      <button type="button" data-time="Day" aria-pressed="true">Day</button>
+      <button type="button" data-time="Sunset" aria-pressed="false">Sunset</button>
+    </div>
+    <script type="module" src="bootstrap.js"></script>
+  </body>
+</html>

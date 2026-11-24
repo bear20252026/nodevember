@@ -1,0 +1,171 @@
+import { a as g, b as S } from "./studio-presets.js";
+const q = `// Percentage-closer soft shadows for the raw-WebGPU days. Needs \`shadowMap: texture_depth_2d\` and \`shadowCmp: sampler_comparison\`.
+// Shadows stay sharp where something touches the surface and widen with the distance it falls, up to \`spread\` texels
+// (the softness each call site already chose): blocker search, penumbra from the depth gap, then a filter that wide.
+const PCSS_TAPS = array<vec2f, 12>(vec2f(-0.33, 0.12), vec2f(0.21, 0.4), vec2f(0.5, -0.1), vec2f(-0.06, -0.47), vec2f(-0.7, -0.33), vec2f(-0.6, 0.55), vec2f(0.1, 0.86), vec2f(0.75, 0.48), vec2f(0.86, -0.42), vec2f(0.2, -0.9), vec2f(-0.41, -0.88), vec2f(-0.96, 0.08));
+const PCSS_LIGHT = 0.08;
+
+fn pcss(uv: vec2f, z: f32, spread: f32, size: f32, taps: i32) -> f32 {
+  let texel = 1.0 / size;
+  let maxR = spread * texel;
+  let last = vec2i(i32(size) - 1);
+  var blockerSum = 0.0;
+  var blockers = 0.0;
+  for (var i = 0; i < 12; i++) {
+    let coord = clamp(vec2i((uv + PCSS_TAPS[i] * maxR) * size), vec2i(0), last);
+    let d = textureLoad(shadowMap, coord, 0);
+    if (d < z - 0.0006) { blockerSum += d; blockers += 1.0; }
+  }
+  if (blockers < 0.5) { return 1.0; }
+  let penumbra = (z - blockerSum / blockers) * PCSS_LIGHT;
+  let r = clamp(penumbra, texel, max(maxR, texel));
+  let n = clamp(taps, 8, 12);
+  var sum = 0.0;
+  for (var i = 0; i < n; i++) { sum += textureSampleCompareLevel(shadowMap, shadowCmp, uv + PCSS_TAPS[i] * r, z); }
+  return sum / f32(n);
+}
+`,
+  y = `// The photographic finish: a soft glow from the brightest highlights, a little local contrast, then a filmic grade.
+struct Pass { texel: vec2f, strength: f32, time: f32 }
+@group(0) @binding(0) var source: texture_2d<f32>;
+@group(0) @binding(1) var linearSampler: sampler;
+@group(0) @binding(2) var<uniform> pass_: Pass;
+@group(0) @binding(3) var bloomTexture: texture_2d<f32>;
+@group(0) @binding(4) var<uniform> look: Look;
+struct Quad { @builtin(position) clip: vec4f, @location(0) uv: vec2f }
+@vertex fn quadVs(@builtin(vertex_index) v: u32) -> Quad {
+  let c = array<vec2f, 3>(vec2f(-1, -1), vec2f(3, -1), vec2f(-1, 3));
+  return Quad(vec4f(c[v], 0.0, 1.0), vec2f(c[v].x * 0.5 + 0.5, 0.5 - c[v].y * 0.5));
+}
+fn blurDown(uv: vec2f) -> vec3f {
+  let t = pass_.texel;
+  var sum = textureSampleLevel(source, linearSampler, uv, 0.0).rgb * 4.0;
+  sum += textureSampleLevel(source, linearSampler, uv + t * vec2f(-1, -1), 0.0).rgb;
+  sum += textureSampleLevel(source, linearSampler, uv + t * vec2f(1, -1), 0.0).rgb;
+  sum += textureSampleLevel(source, linearSampler, uv + t * vec2f(-1, 1), 0.0).rgb;
+  sum += textureSampleLevel(source, linearSampler, uv + t * vec2f(1, 1), 0.0).rgb;
+  return sum / 8.0;
+}
+@fragment fn brightFs(q: Quad) -> @location(0) vec4f {
+  let c = blurDown(q.uv);
+  let peak = max(c.r, max(c.g, c.b));
+  // One bad pixel must never spread through the blur into a block. (A value that isn't equal to itself isn't a number.)
+  if (peak != peak || peak > 1e4) { return vec4f(0.0, 0.0, 0.0, 1.0); }
+  return vec4f(min(c * smoothstep(1.1, 2.2, peak), vec3f(16.0)), 1.0);
+}
+@fragment fn downFs(q: Quad) -> @location(0) vec4f { return vec4f(blurDown(q.uv), 1.0); }
+@fragment fn upFs(q: Quad) -> @location(0) vec4f {
+  let t = pass_.texel;
+  var sum = vec3f(0.0);
+  sum += textureSampleLevel(source, linearSampler, q.uv + t * vec2f(-1, 0), 0.0).rgb;
+  sum += textureSampleLevel(source, linearSampler, q.uv + t * vec2f(1, 0), 0.0).rgb;
+  sum += textureSampleLevel(source, linearSampler, q.uv + t * vec2f(0, -1), 0.0).rgb;
+  sum += textureSampleLevel(source, linearSampler, q.uv + t * vec2f(0, 1), 0.0).rgb;
+  return vec4f(sum * 0.25, 1.0);
+}
+fn filmic(c: vec3f) -> vec3f {
+  // Holds pastel colours, gives a soft toe and a long shoulder.
+  let m = (c * (c * 0.66 + 0.1)) / (c * (c * 0.66 + 0.3) + 0.06);
+  return clamp(m / 0.94, vec3f(0.0), vec3f(1.0));
+}
+fn hash(p: vec2f) -> f32 { return fract(sin(dot(p, vec2f(127.1, 311.7))) * 43758.5453); }
+@fragment fn finishFs(q: Quad) -> @location(0) vec4f {
+  let t = pass_.texel;
+  let c = textureSampleLevel(source, linearSampler, q.uv, 0.0).rgb;
+  // Local contrast: a little sharper than a lens gives, as a retouched product photo is.
+  let around = (textureSampleLevel(source, linearSampler, q.uv + vec2f(t.x, 0.0), 0.0).rgb
+    + textureSampleLevel(source, linearSampler, q.uv - vec2f(t.x, 0.0), 0.0).rgb
+    + textureSampleLevel(source, linearSampler, q.uv + vec2f(0.0, t.y), 0.0).rgb
+    + textureSampleLevel(source, linearSampler, q.uv - vec2f(0.0, t.y), 0.0).rgb) * 0.25;
+  var x = max(c + (c - around) * 0.12, vec3f(0.0));
+  x += textureSampleLevel(bloomTexture, linearSampler, q.uv, 0.0).rgb * pass_.strength;
+  x = lookGrade(x, q.uv, look);
+  // Light falls off toward the corners, as it does through any real lens.
+  let d = length((q.uv - 0.5) * vec2f(1.0, 0.86));
+  x *= 1.0 - smoothstep(0.32, 0.86, d) * 0.34;
+  var s = pow(filmic(x), vec3f(1.0 / 2.2));
+  if (look.b.y > 0.5) { s = lookTone(x, look.b.y); }
+  // The grade: richer colour, shadows leaning cool, highlights leaning warm.
+  let luma = dot(s, vec3f(0.2126, 0.7152, 0.0722));
+  s = mix(vec3f(luma), s, 1.1);
+  s = mix(s * vec3f(0.97, 0.995, 1.03), s * vec3f(1.015, 1.0, 0.975), smoothstep(0.15, 0.8, luma));
+  // A gentle S-curve.
+  s = mix(s, s * s * (3.0 - 2.0 * s), 0.22);
+  s += (hash(q.clip.xy + fract(pass_.time) * 91.0) - 0.5) * 0.012 + lookGrain(q.clip.xy, pass_.time, look);
+  return vec4f(s, 1.0);
+}
+`,
+  b = [
+    [6.977, 8.0138, 9.0364],
+    [3.7137, 4.2706, 4.8893],
+    [-0.1716, -0.1827, -0.1336],
+    [-2.6957, -3.1333, -3.7194],
+    [-2.316, -2.666, -3.0513],
+    [0.3464, 0.3993, 0.4589],
+    [0.0745, 0.094, 0.1397],
+    [-1.0182, -1.1633, -1.2847],
+    [1.7637, 2.0235, 2.2799],
+  ],
+  w = [
+    { dir: [-0.7467, 0.6535, 0.1237], colour: [3.61, 4.2, 5.086] },
+    { dir: [0.8897, -0.013, -0.4564], colour: [4.464, 5.025, 5.298] },
+    { dir: [0.8808, 0.2088, -0.4251], colour: [1.155, 1.343, 1.518] },
+  ],
+  a = { sh: b, lights: w };
+function x(
+  t,
+  n,
+  {
+    amount: s = 1,
+    falloff: c = 0.65,
+    strength: p = 1,
+    turn: v = 0,
+    warmth: f = 0.35,
+  } = {},
+) {
+  const o = (v * Math.PI) / 180,
+    u = Math.cos(o),
+    i = Math.sin(o);
+  t.set([s, c, u, i], n);
+  const r = [0, 1, 2].map(
+      (e) =>
+        a.sh[0][e] * 0.282095 + a.sh[1][e] * 0.488603 + a.sh[6][e] * 0.63078,
+    ),
+    h = 0.2126 * r[0] + 0.7152 * r[1] + 0.0722 * r[2],
+    l = [0, 1, 2].map(
+      (e) =>
+        ((h / r[e]) *
+          (e === 0 ? 1 + 0.14 * f : e === 2 ? 1 - 0.2 * f : 1) *
+          1.3 *
+          p) /
+        h,
+    );
+  a.sh.forEach((e, m) =>
+    t.set([e[0] * l[0], e[1] * l[1], e[2] * l[2], 0], n + 4 + m * 4),
+  );
+  const d = (e) => [u * e[0] + i * e[2], e[1], -i * e[0] + u * e[2]];
+  return (
+    a.lights.slice(0, 2).forEach((e, m) => {
+      (t.set([...d(e.dir), 0], n + 40 + m * 4),
+        t.set(
+          [e.colour[0] * l[0], e.colour[1] * l[1], e.colour[2] * l[2], 0],
+          n + 48 + m * 4,
+        ));
+    }),
+    d(a.lights[0].dir)
+  );
+}
+function _(t, n, s, c) {
+  if (!s) return x(t, n, c);
+  const p = a.lights[0].dir,
+    v = (r) => Math.atan2(r[0], r[2]),
+    f = ((v(s.key) - v(p)) * 180) / Math.PI;
+  x(t, n, { ...c, turn: f, strength: (c.strength * s.env) / 0.5 });
+  const o = g(s);
+  t.set([...o, 0], n + 40);
+  const u = S(s.keyColor),
+    i = s.keyLevel / 4.4 / (s.env / 0.5);
+  for (let r = 0; r < 3; r++) t[n + 48 + r] *= u[r] * i;
+  return o;
+}
+export { y as a, q as p, _ as w };

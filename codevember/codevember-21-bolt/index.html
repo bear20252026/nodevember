@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>21 — bolt</title>
+    <style>
+      html, body { margin: 0; height: 100%; overflow: hidden; background: #0a0a0b; color: #b9b2d6; font: 11px/1.4 ui-sans-serif, system-ui, sans-serif; }
+      canvas { position: fixed; inset: 0; display: block; touch-action: none; cursor: grab; }
+      #bar { position: fixed; left: 0; right: 0; bottom: 0; height: 34px; display: flex; align-items: center; gap: 16px; padding: 0 14px; letter-spacing: 0.04em; transition: opacity 0.4s; user-select: none; }
+      #bar.hidden { opacity: 0; pointer-events: none; }
+      #info { margin-right: auto; opacity: 0.7; }
+      #keys { opacity: 0.5; }
+      @media (max-width: 700px) { #keys { display: none; } }
+    </style>
+  </head>
+  <body>
+    <div id="bar"><span id="info"></span><span id="keys">drag orbit · scroll zoom · space or click let it go · n new strike · r turn · p pause · s sound · h hide</span></div>
+    <!-- lets the folder run as-is on any static server, without the vite build;
+         keep the version in sync with package.json -->
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+          "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+        }
+      }
+    </script>
+    <script type="module" src="./main.js"></script>
+  </body>
+</html>

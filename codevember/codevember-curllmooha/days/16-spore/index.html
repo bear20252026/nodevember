@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Spore</title>
+    <meta
+      name="description"
+      content="An interactive macro study of one mushroom, seen from beneath its cap."
+    />
+    <link rel="icon" href="data:," />
+    <style>
+      :root {
+        --ink: #f4ecd8;
+        --dim: #f4ecd8a8;
+      }
+      html,
+      body {
+        margin: 0;
+        height: 100%;
+        overflow: hidden;
+        background: #020406;
+        color: var(--ink);
+        font:
+          14px/1.3 ui-sans-serif,
+          -apple-system,
+          "Helvetica Neue",
+          Arial,
+          sans-serif;
+      }
+      canvas#view {
+        position: fixed;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        display: block;
+        touch-action: none;
+        cursor: grab;
+      }
+      canvas#view:active {
+        cursor: grabbing;
+      }
+      canvas#view:focus-visible {
+        outline: none;
+      }
+      #title {
+        position: fixed;
+        top: 20px;
+        left: 24px;
+        display: flex;
+        gap: 10px;
+        align-items: baseline;
+        z-index: 2;
+      }
+      #title a {
+        color: var(--dim);
+        text-decoration: none;
+      }
+      #title a:hover,
+      #title a:focus-visible {
+        color: var(--ink);
+        text-decoration: underline;
+      }
+      #title strong {
+        font-weight: 500;
+      }
+      #hint {
+        position: fixed;
+        top: 44px;
+        left: 24px;
+        right: 24px;
+        margin: 0;
+        color: var(--dim);
+        pointer-events: none;
+        max-width: 520px;
+      }
+      body.capture :is(#title, #hint, #specimen, #controls) {
+        display: none;
+      }
+      #specimen {
+        position: fixed;
+        z-index: 2;
+        bottom: 24px;
+        left: 24px;
+        width: clamp(140px, 17vw, 215px);
+        text-shadow: 0 1px 5px #000;
+      }
+      #specimen summary {
+        cursor: pointer;
+        font-size: 13px;
+        font-weight: 550;
+      }
+      #specimen canvas {
+        display: block;
+        width: 100%;
+        height: auto;
+        border-radius: 50%;
+        margin: 8px 0;
+        box-shadow:
+          0 0 0 1px #dad1bf66,
+          0 4px 18px #0006;
+      }
+      #specimen footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 5px;
+        font-size: 11px;
+        color: #ede6d8;
+      }
+      #specimen button {
+        padding: 4px;
+        border: 0;
+        background: #181714af;
+        color: inherit;
+        font: inherit;
+        text-decoration: underline;
+        cursor: pointer;
+      }
+      @media (max-width: 600px) {
+        #specimen {
+          left: 14px;
+          bottom: 71px;
+          width: min(145px, 38vw);
+        }
+      }
+      body.capture canvas#view {
+        opacity: 1;
+        transition: none;
+      }
+      body.capture #specimen {
+        left: 3%;
+        bottom: 3%;
+      }
+      body.capture #specimen summary,
+      body.capture #specimen footer {
+        display: none;
+      }
+    </style>
+    <script type="module" src="/src/days/16-spore.js"></script>
+  </head>
+  <body>
+    <div id="title">
+      <a href="../../">Codevember</a><strong>16 Spore</strong>
+    </div>
+    <p id="hint">Drag to orbit · Scroll or pinch to inspect the gills.</p>
+    <details id="specimen">
+      <summary>Spore reference · pleated inkcap</summary>
+      <canvas width="512" height="512" role="img"></canvas>
+      <footer>
+        <span id="specimen-caption"></span
+        ><button id="specimen-mode" type="button">View print</button>
+      </footer>
+    </details>
+    <div id="controls"></div>
+  </body>
+</html>

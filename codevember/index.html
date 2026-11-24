@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Codevember — Nodevember Archive</title>
+<meta name="description" content="Sixteen Codevember 2026 works — three complete sets and thirteen studies — moved from paper-widgets to the Nodevember archive." />
+<meta name="theme-color" content="#f4f2ed" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Crect width=%2232%22 height=%2232%22 rx=%228%22 fill=%22%23f4f2ed%22/%3E%3Ccircle cx=%2216%22 cy=%2216%22 r=%225%22 fill=%22%23b5452d%22/%3E%3C/svg%3E" />
+<style>
+  :root { --paper:#f4f2ed; --ink:#1b1a17; --muted:#716d64; --hair:#d8d4ca; --accent:#b5452d; --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; --sans:"Helvetica Neue",Arial,sans-serif; }
+  * { box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { margin:0; background:var(--paper); color:var(--ink); font-family:var(--sans); -webkit-font-smoothing:antialiased; }
+  a { color:inherit; }
+  .page { max-width:1480px; margin:0 auto; padding:0 34px 64px; }
+  .mast { display:flex; align-items:center; justify-content:space-between; gap:20px; padding:27px 0 19px; border-bottom:1px solid var(--hair); }
+  .brand { display:flex; align-items:center; gap:10px; font-size:15px; letter-spacing:-.2px; }
+  .brand i { display:block; width:7px; height:7px; border-radius:50%; background:var(--accent); box-shadow:0 0 0 4px color-mix(in srgb,var(--accent) 12%,transparent); }
+  .mast nav { display:flex; align-items:center; gap:22px; font-family:var(--mono); font-size:10px; letter-spacing:.5px; text-transform:uppercase; color:var(--muted); }
+  .mast nav a { text-decoration:none; padding-bottom:3px; border-bottom:1px solid transparent; }
+  .mast nav a:hover { color:var(--ink); border-color:var(--ink); }
+  .hero { padding:72px 0 44px; border-bottom:1px solid var(--ink); }
+  .eyebrow { margin:0; font-family:var(--mono); font-size:10px; line-height:1.6; letter-spacing:1.25px; text-transform:uppercase; color:var(--muted); }
+  .hero h1 { margin:22px 0 20px; font-size:clamp(56px,8.8vw,124px); line-height:.87; letter-spacing:-.06em; font-weight:400; max-width:9ch; }
+  .hero h1 em { color:var(--accent); font-style:normal; }
+  .hero .lead { max-width:64ch; margin:0; font-size:15px; line-height:1.75; color:#55534b; }
+  .hero .lead b { color:var(--ink); font-weight:500; }
+  .stats { display:flex; flex-wrap:wrap; gap:9px; margin-top:24px; }
+  .stats span { display:inline-flex; gap:7px; padding:7px 10px; border:1px solid var(--hair); border-radius:999px; font-family:var(--mono); font-size:9.5px; letter-spacing:.35px; color:var(--muted); background:rgba(255,255,255,.32); }
+  .stats b { color:var(--ink); font-weight:500; }
+  .filters { display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin:30px 0 0; }
+  .search { flex:1 1 260px; max-width:420px; }
+  .search input { width:100%; border:1px solid var(--hair); border-radius:999px; background:rgba(255,255,255,.35); padding:11px 16px; font-family:var(--mono); font-size:10px; letter-spacing:.3px; color:var(--ink); outline:none; }
+  .search input:focus { border-color:var(--ink); background:#fff; }
+  .filter-buttons { display:flex; gap:6px; flex-wrap:wrap; }
+  .filter-buttons button { border:1px solid var(--hair); background:transparent; border-radius:999px; padding:9px 12px; font-family:var(--mono); font-size:9px; letter-spacing:.45px; text-transform:uppercase; color:var(--muted); cursor:pointer; }
+  .filter-buttons button:hover,.filter-buttons button.on { border-color:var(--ink); color:var(--ink); background:rgba(255,255,255,.44); }
+  .count { margin-left:auto; font-family:var(--mono); font-size:9px; color:var(--muted); letter-spacing:.4px; text-transform:uppercase; }
+  .catalogue { padding-top:34px; }
+  .grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:24px; }
+  .piece { display:block; text-decoration:none; min-width:0; }
+  .piece figure { position:relative; overflow:hidden; margin:0; border-radius:18px; aspect-ratio:1/1; background:linear-gradient(135deg,var(--a),var(--b)); box-shadow:0 0 0 1px rgba(20,20,22,.07),0 24px 38px -32px rgba(40,34,20,.6); }
+  .piece figure::before { content:""; position:absolute; inset:0; background:radial-gradient(circle at 28% 22%,rgba(255,255,255,.3),transparent 34%),linear-gradient(160deg,transparent 45%,rgba(0,0,0,.22)); }
+  .piece figure::after { content:""; position:absolute; right:13%; top:18%; width:29%; aspect-ratio:1; border:1px solid var(--m); border-radius:50%; opacity:.8; }
+  .piece .no { position:absolute; top:12px; left:13px; z-index:2; font-family:var(--mono); font-size:10px; letter-spacing:.7px; color:rgba(255,255,255,.92); text-shadow:0 1px 12px rgba(0,0,0,.4); }
+  .piece .play { position:absolute; left:13px; bottom:12px; z-index:2; padding:6px 9px; border:1px solid rgba(255,255,255,.28); border-radius:999px; background:rgba(12,12,14,.44); color:#fff; font-family:var(--mono); font-size:8.5px; letter-spacing:.55px; text-transform:uppercase; backdrop-filter:blur(8px); }
+  .piece .copy { padding:13px 2px 0; }
+  .piece .line { display:flex; align-items:baseline; justify-content:space-between; gap:10px; }
+  .piece h2 { margin:0; font-size:24px; line-height:1.04; letter-spacing:-.035em; font-weight:400; }
+  .piece .line span { flex:none; font-family:var(--mono); font-size:8.5px; letter-spacing:.3px; color:var(--muted); text-transform:uppercase; }
+  .piece p { margin:8px 0 0; font-size:12px; line-height:1.58; color:#67635a; display:-webkit-box; -webkit-line-clamp:4; -webkit-box-orient:vertical; overflow:hidden; }
+  .piece .tags { display:flex; flex-wrap:wrap; gap:5px; margin:10px 0 0; padding:0; list-style:none; }
+  .piece .tags li { padding:4px 7px; border:1px solid var(--hair); border-radius:999px; font-family:var(--mono); font-size:8px; letter-spacing:.3px; color:var(--muted); text-transform:uppercase; }
+  .foot { display:flex; justify-content:space-between; gap:24px; flex-wrap:wrap; margin-top:60px; padding-top:22px; border-top:1px solid var(--hair); font-family:var(--mono); font-size:9.5px; line-height:1.7; letter-spacing:.3px; color:var(--muted); }
+  .foot a { text-decoration:none; border-bottom:1px solid var(--hair); }
+  @media (max-width:1100px){ .grid{grid-template-columns:repeat(3,minmax(0,1fr));} }
+  @media (max-width:760px){ .page{padding:0 20px 44px;} .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;} .piece h2{font-size:21px;} .mast nav{gap:12px;} .mast nav a:nth-child(2){display:none;} }
+  @media (max-width:480px){ .grid{grid-template-columns:1fr;} }
+</style>
+</head>
+<body>
+<div class="page">
+  <header class="mast">
+    <div class="brand"><i></i>Frontier</div>
+    <nav><a href="../">Nodevember ↗</a><a href="https://bear20252026.github.io/frontier-atlas/">Atlas ↗</a><a href="https://github.com/bear20252026/nodevember">GitHub ↗</a></nav>
+  </header>
+  <main>
+    <section class="hero">
+      <p class="eyebrow">Nodevember · Codevember archive · 16 works · 2026</p>
+      <h1>Codevember,<br /><em>kept.</em></h1>
+      <p class="lead">A separate November archive, moved here from <b>paper-widgets</b>: three complete Codevember 2026 sets and thirteen single-prompt WebGL studies. The original credits, versions and licences travel with each folder.</p>
+      <div class="stats"><span><b>16</b> works</span><span><b>3</b> sets</span><span><b>13</b> studies</span><span>WebGL · WebGPU · Three.js</span></div>
+    </section>
+    <section class="catalogue">
+      <div class="filters">
+        <label class="search"><input id="cq" type="search" placeholder="Search the Codevember archive…" autocomplete="off" /></label>
+        <div class="filter-buttons" id="ctiers"><button class="on" data-tier="all">All</button><button data-tier="shelf">Sets</button><button data-tier="workshop">Studies</button></div>
+        <span class="count" id="ccount">16 works</span>
+      </div>
+      <div class="grid" id="cgrid">
+        <a class="piece" href="./codevember-01-fold/index.html" data-tier="workshop" data-text="fold a flat grid grows, folds seven times and is cut in two; the halves open like the pages of a book to show their cut faces. soft candy gum in pastel layers, and a shadow that falls only on the floor. three.js glsl folded study">
+          <figure style="--a:#fbf3ea;--b:#f7a1b5;--m:rgba(20,20,22,0.38)">
+            <span class="no">01</span>
+            <span class="play">Open ↗</span>
+          </figure>
+          <div class="copy">
+            <div class="line"><h2>Fold</h2><span>Study</span></div>
+            <p>A flat grid grows, folds seven times and is cut in two; the halves open like the pages of a book to show their cut faces. Soft candy gum in pastel layers, and a shadow that falls only on the floor.</p>
+            <ul class="tags"><li>three.js</li><li>GLSL</li><li>folded</li></ul>
+          </div>
+        </a>
+        <a class="piece" href="./codevember-02-shatter/index.html" data-tier="workshop" data-text="shatter solid volumes of glass, ice, wood, marble, stone, ceramic and obsidian break into fragments; the camera zooms into the core of each, and the next volume is waiting inside. three.js fracture materials study">
+          <figure style="--a:#d2d1cd;--b:#bcd6e0;--m:rgba(20,20,22,0.38)">
+            <span class="no">02</span>
+            <span class="play">Open ↗</span>
+          </figure>
+          <div class="copy">
+            <div class="line"><h2>Shatter</h2><span>Study</span></div>
+            <p>Solid volumes of glass, ice, wood, marble, stone, ceramic and obsidian break into fragments; the camera zooms into the core of each, and the next volume is waiting inside.</p>
+            <ul class="tags"><li>three.js</li><li>fracture</li><li>materials</li></ul>
+          </div>
+        </a>
+        <a class="piece" href="./codevember-04-tangle/index.html" data-tier="workshop" data-text="tangle one growth seen three ways at once: the same views side by side, one camera they share, each built from the same seed and growing at the same pace. three.js growth three views study">
+          <figure style="--a:#141311;--b:#ffe6cc;--m:rgba(255,255,255,0.55)">
+            <span class="no">03</span>
+            <span class="play">Open ↗</span>
+          </figure>
+          <div class="copy">
+            <div class="line"><h2>Tangle</h2><span>Study</span></div>
+            <p>One growth seen three ways at once: the same views side by side, one camera they share, each built from the same seed and growing at the same pace.</p>
+            <ul class="tags"><li>three.js</li><li>growth</li><li>three views</li></ul>
+          </div>
+        </a>
+        <a class="piece" href="./codevember-05-moss/index.html" data-tier="workshop" data-text="moss a cushion of moss on a boulder, and two little ones beside it: bare soil, then short leafy shoots spreading from a few spots, then long filaments rising and their capsules ripening to orange. three.js growth moss study">
+          <figure style="--a:#8a9096;--b:#b8e060;--m:rgba(255,255,255,0.55)">
+            <span class="no">04</span>
+            <span class="play">Open ↗</span>
+          </figure>
+          <div class="copy">
+            <div class="line"><h2>Moss</h2><span>Study</span></div>
+            <p>A cushion of moss on a boulder, and two little ones beside it: bare soil, then short leafy shoots spreading from a few spots, then long filaments rising and their capsules ripening to orange.</p>
+            <ul class="tags"><li>three.js</li><li>growth</li><li>moss</li></ul>
+          </div>
+        </a>
+        <a class="piece" href="./codevember-06-orrery/index.html" data-tier="workshop" data-text="orrery a brass orrery in an observatory hall at night, engraved like a voyages extraordinaires plate: the sun is a lamp, the gears turn in the cage, the planets go round on their arms and cast their shadows. three.js brass orrery study">
+          <figure style="--a:#e9d8b4;--b:#7a5a2a;--m:rgba(20,20,22,0.38)">
+            <span class="no">05</span>
+            <span class="play">Open ↗</span>
+          </figure>
+          <div class="copy">
+            <div class="line"><h2>Orrery</h2><span>Study</span></div>
+            <p>A brass orrery in an observatory hall at night, engraved like a Voyages Extraordinaires plate: the sun is a lamp, the gears turn in the cage, the planets go round on their arms and cast their shadows.</p>
+            <ul class="tags"><li>three.js</li><li>brass</li><li>orrery</li></ul>
+          </div>
+        </a>
+        <a class="piece" href="./codevember-07-hollow/index.html" data-tier="workshop" data-text="hollow a hollow sphere of marble, split along seams where a noise crosses a threshold, each part framed in brass: it starts thrown apart and rebuilds itself; hovered parts fly off for good. three.js marble fracture study">
+          <figure style="--a:#d2d1cd;--b:#c8b07a;--m:rgba(20,20,22,0.38)">
+            <span class="no">06</span>
+            <span class="play">Open ↗</span>
+          </figure>
+          <div class="copy">
+            <div class="line"><h2>Hollow</h2><span>Study</span></div>
+            <p>A hollow sphere of marble, split along seams where a noise crosses a threshold, each part framed in brass: it starts thrown apart and rebuilds itself; hovered parts fly off for good.</p>
+            <ul class="tags"><li>three.js</li><li>marble</li><li>fracture</li></ul>
+          </div>
+        </a>
+        <a class="piece" href="./codevember-09-membrane/index.html" data-tier="workshop" data-text="membrane a slice of a life form under the microscope — jelly blocks with small dark cores between two blurry films, a marbled fluid, a nucleus and vesicles — and then its death. three.js shader microscopy study">
+          <figure style="--a:#eceeef;--b:#f0c4c4;--m:rgba(20,20,22,0.38)">
+            <span class="no">07</span>
+            <span class="play">Open ↗</span>
+          </figure>
+          <div class="copy">
+            <div class="line"><h2>Membrane</h2><span>Study</span></div>
+            <p>A slice of a life form under the microscope — jelly blocks with small dark cores between two blurry films, a marbled fluid, a nucleus and vesicles — and then its death.</p>
+            <ul class="tags"><li>three.js</li><li>shader</li><li>microscopy</li></ul>
+          </div>
+        </a>
+        <a class="piece" href="./codevember-10-caustics/index.html" data-tier="workshop" data-text="caustics caustics as the path of light in a diorama: a long, shallow glass tank on a thick wooden shelf, a block of sand with water over it, grains of light falling and bending through the waves. three.js light diorama study">
+          <figure style="--a:#b9b6b0;--b:#2f6b86;--m:rgba(20,20,22,0.38)">
+            <span class="no">08</span>
+            <span class="play">Open ↗</span>
+          </figure>
+          <div class="copy">
+            <div class="line"><h2>Caustics</h2><span>Study</span></div>
+            <p>Caustics as the path of light in a diorama: a long, shallow glass tank on a thick wooden shelf, a block of sand with water over it, grains of light falling and bending through the waves.</p>
+            <ul class="tags"><li>three.js</li><li>light</li><li>diorama</li></ul>
+          </div>
+        </a>
+        <a class="piece" href="./codevember-12-feather/index.html" data-tier="workshop" data-text="feather a small creature under a coat of feathers simulated one by one: pick it up, shake it, throw it, and it lands on its legs; left alone it fluffs and shakes its coat. three.js feathers springs study">
+          <figure style="--a:#cdc6bc;--b:#d8692a;--m:rgba(20,20,22,0.38)">
+            <span class="no">09</span>
+            <span class="play">Open ↗</span>
+          </figure>
+          <div class="copy">
+            <div class="line"><h2>Feather</h2><span>Study</span></div>
+            <p>A small creature under a coat of feathers simulated one by one: pick it up, shake it, throw it, and it lands on its legs; left alone it fluffs and shakes its coat.</p>
+            <ul class="tags"><li>three.js</li><li>feathers</li><li>springs</li></ul>
+          </div>
+        </a>
+        <a class="piece" href="./codevember-14-tension/index.html" data-tier="workshop" data-text="tension a rope stretched top to bottom, about to snap: five of its six strands have broken and the last one, untwisted into the middle, holds across the gap. the view zooms in and finds the same rope again, a third the size — and so on, forever. three.js rope sound study">
+          <figure style="--a:#121013;--b:#c25a32;--m:rgba(255,255,255,0.55)">
+            <span class="no">10</span>
+            <span class="play">Open ↗</span>
+          </figure>
+          <div class="copy">
+            <div class="line"><h2>Tension</h2><span>Study</span></div>
+            <p>A rope stretched top to bottom, about to snap: five of its six strands have broken and the last one, untwisted into the middle, holds across the gap. The view zooms in and finds the same rope again, a third the size — and so on, forever.</p>
+            <ul class="tags"><li>three.js</li><li>rope</li><li>sound</li></ul>
+          </div>
+        </a>
+        <a class="piece" href="./codevember-17-kelp/index.html" data-tier="workshop" data-text="kelp a sea floor to draw kelp on: every stipe and blade is a chain of joints pulled by buoyancy and the current, the pointer's wake included. the wells on the left pick the kind. three.js kelp water study">
+          <figure style="--a:#062330;--b:#5f9e6a;--m:rgba(255,255,255,0.55)">
+            <span class="no">11</span>
+            <span class="play">Open ↗</span>
+          </figure>
+          <div class="copy">
+            <div class="line"><h2>Kelp</h2><span>Study</span></div>
+            <p>A sea floor to draw kelp on: every stipe and blade is a chain of joints pulled by buoyancy and the current, the pointer's wake included. The wells on the left pick the kind.</p>
+            <ul class="tags"><li>three.js</li><li>kelp</li><li>water</li></ul>
+          </div>
+        </a>
+        <a class="piece" href="./codevember-21-bolt/index.html" data-tier="workshop" data-text="bolt a diorama of a thunderstorm: on a block of meadow, its soil layers showing over a wooden base, a bolt of lightning strikes and is held at the instant it touches the ground. only the bolt is still; the clouds roll and the rain keeps falling. three.js lightning storm study">
+          <figure style="--a:#0a0a0b;--b:#b9b2d6;--m:rgba(255,255,255,0.6)">
+            <span class="no">12</span>
+            <span class="play">Open ↗</span>
+          </figure>
+          <div class="copy">
+            <div class="line"><h2>Bolt</h2><span>Study</span></div>
+            <p>A diorama of a thunderstorm: on a block of meadow, its soil layers showing over a wooden base, a bolt of lightning strikes and is held at the instant it touches the ground. Only the bolt is still; the clouds roll and the rain keeps falling.</p>
+            <ul class="tags"><li>three.js</li><li>lightning</li><li>storm</li></ul>
+          </div>
+        </a>
+        <a class="piece" href="./codevember-2026/index.html" data-tier="shelf" data-text="codevember 2026 mrdoob's whole november as the repository keeps it: seventeen days, each a folder of es modules beside the gallery that links them — a sheet folding, a neon tesseract, a snowbound maze, steel chains under tension, sandstone eroded into mirage. webgpu, mit. webgpu tsl mit set">
+          <figure style="--a:#101014;--b:#5a68ff;--m:rgba(255,255,255,0.6)">
+            <span class="no">13</span>
+            <span class="play">Open ↗</span>
+          </figure>
+          <div class="copy">
+            <div class="line"><h2>Codevember 2026</h2><span>Set</span></div>
+            <p>mrdoob's whole November as the repository keeps it: seventeen days, each a folder of ES modules beside the gallery that links them — a sheet folding, a neon tesseract, a snowbound maze, steel chains under tension, sandstone eroded into mirage. WebGPU, MIT.</p>
+            <ul class="tags"><li>WebGPU</li><li>TSL</li><li>MIT</li></ul>
+          </div>
+        </a>
+        <a class="piece" href="./codevember-loktar00/index.html" data-tier="workshop" data-text="stepping stones loktar00's codevember piece for the prompt moss: a fox hopping forever across five floating, moss-covered rock islands at golden hour — cushion moss, backlit grass, soft contact shadows and synthesized ambience. click for sound. three.js moss sound study">
+          <figure style="--a:#0b0c10;--b:#d9c187;--m:rgba(255,255,255,0.55)">
+            <span class="no">14</span>
+            <span class="play">Open ↗</span>
+          </figure>
+          <div class="copy">
+            <div class="line"><h2>Stepping Stones</h2><span>Study</span></div>
+            <p>loktar00's Codevember piece for the prompt moss: a fox hopping forever across five floating, moss-covered rock islands at golden hour — cushion moss, backlit grass, soft contact shadows and synthesized ambience. Click for sound.</p>
+            <ul class="tags"><li>three.js</li><li>moss</li><li>sound</li></ul>
+          </div>
+        </a>
+        <a class="piece" href="./codevember-akella/index.html" data-tier="shelf" data-text="codevember 2026 — eighteen days yuri artiukh's repository of the november prompts: eighteen days, each a folder with its own dependencies and its own vite build — a sheet folding, glass shattering, wax melting, a brass orrery, a maze, rust, a mirage, a spore, a kelp forest and a pendulum — with the build files and baked assets they were made from. three.js vite 18 days set">
+          <figure style="--a:#0d0d10;--b:#e6ded0;--m:rgba(255,255,255,0.55)">
+            <span class="no">15</span>
+            <span class="play">Open ↗</span>
+          </figure>
+          <div class="copy">
+            <div class="line"><h2>Codevember 2026 — Eighteen Days</h2><span>Set</span></div>
+            <p>Yuri Artiukh's repository of the November prompts: eighteen days, each a folder with its own dependencies and its own Vite build — a sheet folding, glass shattering, wax melting, a brass orrery, a maze, rust, a mirage, a spore, a kelp forest and a pendulum — with the build files and baked assets they were made from.</p>
+            <ul class="tags"><li>three.js</li><li>Vite</li><li>18 days</li></ul>
+          </div>
+        </a>
+        <a class="piece" href="./codevember-curllmooha/dist/index.html" data-tier="shelf" data-text="codevember 2026 — twenty-three days curllmooha's deployed set: twenty-three of the thirty webgpu prompts, each a scene with its own live controls, textures, models and sound — a sheet folding forever, a launcher cracking a volume, three scoops melting, wool tangling, a gravity-well orrery, a hollow earth, a kelp forest, a maple lantern, a lightning strike, a cave of echoes and a magma flow. recovered from the public vite bundle into an editable multi-page project; days 24–30 were not published. webgpu vite 23 days set">
+          <figure style="--a:#a9def8;--b:#ffe02e;--m:rgba(20,20,22,0.38)">
+            <span class="no">16</span>
+            <span class="play">Open ↗</span>
+          </figure>
+          <div class="copy">
+            <div class="line"><h2>Codevember 2026 — Twenty-Three Days</h2><span>Set</span></div>
+            <p>curllmooha's deployed set: twenty-three of the thirty WebGPU prompts, each a scene with its own live controls, textures, models and sound — a sheet folding forever, a launcher cracking a volume, three scoops melting, wool tangling, a gravity-well orrery, a hollow Earth, a kelp forest, a maple lantern, a lightning strike, a cave of echoes and a magma flow. Recovered from the public Vite bundle into an editable multi-page project; days 24–30 were not published.</p>
+            <ul class="tags"><li>WebGPU</li><li>Vite</li><li>23 days</li></ul>
+          </div>
+        </a>
+      </div>
+    </section>
+  </main>
+  <footer class="foot"><span>Codevember archive · Nodevember · 16 works</span><span><a href="../">Nodevember ↗</a> · <a href="https://github.com/bear20252026/paper-widgets">Original paper-widgets repository</a></span></footer>
+</div>
+<script>
+(() => {
+  const q = document.getElementById("cq");
+  const cards = [...document.querySelectorAll(".piece")];
+  const buttons = [...document.querySelectorAll("#ctiers button")];
+  const count = document.getElementById("ccount");
+  let tier = "all";
+  const apply = () => {
+    const needle = q.value.trim().toLowerCase();
+    let shown = 0;
+    for (const card of cards) {
+      const hit = (tier === "all" || card.dataset.tier === tier) && (!needle || card.dataset.text.includes(needle));
+      card.hidden = !hit;
+      if (hit) shown += 1;
+    }
+    for (const b of buttons) b.classList.toggle("on", b.dataset.tier === tier);
+    count.textContent = shown + (shown === 1 ? " work" : " works");
+  };
+  q.addEventListener("input", apply);
+  for (const b of buttons) b.addEventListener("click", () => { tier = b.dataset.tier; apply(); });
+  apply();
+})();
+</script>
+</body>
+</html>

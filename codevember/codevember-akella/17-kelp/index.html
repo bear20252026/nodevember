@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>kelp</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      body {
+        background: #03121f;
+      }
+      canvas {
+        display: block;
+      }
+      /* What shows till the first picture is on the screen: the word, each letter the top of a stipe that sways
+         from its foot, the next a little after the last, as a swell goes along a bed of weed. In the page itself,
+         so it is there before any script is. Only transforms and opacity move: those go on while the page is
+         busy building its shaders, which is most of the wait and would stop anything a script drove. */
+      #loader {
+        position: fixed;
+        inset: 0;
+        z-index: 20000; /* over the panel and the counter, which come before the picture does */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: radial-gradient(120% 90% at 50% 0%, #0b3140 0%, #06202f 45%, #03121f 100%);
+        font: 300 clamp(22px, 4.2vmin, 44px) / 1 "Avenir Next", "Helvetica Neue", system-ui, sans-serif;
+        transition: opacity 1.2s ease 0.1s;
+      }
+      #loader.done {
+        opacity: 0;
+        pointer-events: none;
+      }
+      #loader .bed {
+        display: flex;
+        gap: 0.62em;
+        transform: translateY(1.6em);
+        transition: transform 1.3s cubic-bezier(0.3, 0, 0.2, 1);
+      }
+      /* let go, the weed goes on up */
+      #loader.done .bed {
+        transform: translateY(0.4em);
+      }
+      /* a stipe: it comes up from below, then sways about its foot */
+      #loader .stipe {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 0.7em;
+        transform-origin: 50% 100%;
+        will-change: transform, opacity;
+        animation:
+          rise 1.1s cubic-bezier(0.2, 0.7, 0.2, 1) both,
+          sway 3.4s ease-in-out infinite;
+        animation-delay: calc(var(--i) * 0.09s), calc(var(--i) * 0.3s - 3.4s);
+      }
+      /* the letter at its top goes the same way a little later and further, as the end of a blade does */
+      #loader .stipe b {
+        font-weight: 300;
+        color: hsl(calc(46 + var(--i) * 5) 62% 62%);
+        text-shadow: 0 0 0.9em rgba(214, 178, 78, 0.35);
+        transform-origin: 50% 110%;
+        will-change: transform;
+        animation: tip 3.4s ease-in-out infinite;
+        animation-delay: calc(var(--i) * 0.3s - 3.4s + 0.45s);
+      }
+      #loader .stipe i {
+        width: 1px;
+        height: calc(3.4em + var(--h) * 1em);
+        margin-top: 0.42em;
+        background: linear-gradient(rgba(190, 168, 84, 0.6), rgba(120, 150, 90, 0.22) 55%, rgba(60, 120, 110, 0));
+      }
+      #loader p {
+        display: none;
+        max-width: 22em;
+        margin: 0;
+        color: #9fb3ad;
+        font-size: 14px;
+        line-height: 1.5;
+        letter-spacing: 0.04em;
+        text-align: center;
+      }
+      #loader.failed .bed {
+        display: none;
+      }
+      #loader.failed p {
+        display: block;
+      }
+      @keyframes rise {
+        from {
+          opacity: 0;
+          translate: 0 2.2em;
+          scale: 1 0.6;
+        }
+      }
+      @keyframes sway {
+        0%,
+        100% {
+          transform: rotate(-5deg);
+        }
+        50% {
+          transform: rotate(5deg);
+        }
+      }
+      @keyframes tip {
+        0%,
+        100% {
+          transform: rotate(-6deg);
+        }
+        50% {
+          transform: rotate(6deg);
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        #loader .stipe,
+        #loader .stipe b {
+          animation: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="loader" role="status" aria-label="kelping">
+      <div class="bed" aria-hidden="true"><span class="stipe" style="--i: 0; --h: 0.5"><b>k</b><i></i></span><span class="stipe" style="--i: 1; --h: 0"><b>e</b><i></i></span><span class="stipe" style="--i: 2; --h: 0.9"><b>l</b><i></i></span><span class="stipe" style="--i: 3; --h: 0.2"><b>p</b><i></i></span><span class="stipe" style="--i: 4; --h: 1.1"><b>i</b><i></i></span><span class="stipe" style="--i: 5; --h: 0.35"><b>n</b><i></i></span><span class="stipe" style="--i: 6; --h: 0.7"><b>g</b><i></i></span></div>
+      <p></p>
+    </div>
+    <script>
+      // without WebGPU nothing will come, and with it something can still go wrong: say so, rather than sway for ever
+      {
+        const loader = document.getElementById("loader");
+        const say = (text) => {
+          if (loader.classList.contains("done")) return;
+          loader.classList.add("failed");
+          loader.querySelector("p").textContent = text;
+        };
+        if (!navigator.gpu) say("this one needs WebGPU: a recent Chrome, Edge or Safari");
+        addEventListener("error", (e) => say(e.message || "something went wrong"));
+        addEventListener("unhandledrejection", (e) => say(String((e.reason && e.reason.message) || e.reason || "something went wrong")));
+      }
+    </script>
+    <script type="module" src="./src/tangle.ts"></script>
+  </body>
+</html>

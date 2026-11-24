@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tangle</title>
+    <meta
+      name="description"
+      content="Three balls of wool in one knot, on a blanket under a lamp at night. Pull the threads, throw the balls, snap the blanket, and wind it all back up."
+    />
+    <link rel="icon" href="data:," />
+    <style>
+      :root {
+        --ink: #f4efe6;
+        --dim: #f4efe699;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        height: 100%;
+        overflow: hidden;
+        background: #070b1a;
+        color: var(--ink);
+        font:
+          14px/1.3 ui-sans-serif,
+          -apple-system,
+          "Helvetica Neue",
+          Arial,
+          sans-serif;
+        transition: background 0.4s;
+      }
+      canvas#view {
+        position: fixed;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        display: block;
+        touch-action: none;
+        -webkit-user-select: none;
+        user-select: none;
+      }
+      #message {
+        position: fixed;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        margin: 0;
+        padding: 24px;
+        text-align: center;
+        color: var(--dim);
+        pointer-events: none;
+      }
+      #title {
+        position: fixed;
+        top: 20px;
+        left: 24px;
+        display: flex;
+        gap: 10px;
+        align-items: baseline;
+      }
+      #title a {
+        color: var(--dim);
+        text-decoration: none;
+      }
+      #title a:hover,
+      #title a:focus-visible {
+        color: var(--ink);
+        text-decoration: underline;
+      }
+      #title strong {
+        font-weight: 500;
+      }
+      #hint {
+        position: fixed;
+        top: 44px;
+        left: 24px;
+        margin: 0;
+        color: var(--dim);
+        pointer-events: none;
+        transition: opacity 0.5s;
+      }
+      #bar {
+        position: fixed;
+        left: 50%;
+        bottom: 22px;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 8px;
+      }
+      button {
+        min-height: 40px;
+        padding: 0 22px;
+        border: 0;
+        border-radius: 20px;
+        font: inherit;
+        font-weight: 500;
+        white-space: nowrap;
+        cursor: pointer;
+        touch-action: none;
+        -webkit-user-select: none;
+        user-select: none;
+        transition:
+          opacity 0.2s,
+          background 0.2s,
+          color 0.2s;
+      }
+      button:focus-visible {
+        outline: 2px solid var(--ink);
+        outline-offset: 2px;
+      }
+      #random {
+        color: #15171b;
+        background: var(--ink);
+      }
+      #random:hover {
+        opacity: 0.85;
+      }
+      #wind {
+        color: var(--ink);
+        background: #ffffff1f;
+        -webkit-backdrop-filter: blur(14px);
+        backdrop-filter: blur(14px);
+      }
+      #wind:hover {
+        background: #ffffff33;
+      }
+      #wind[aria-pressed="true"] {
+        color: #15171b;
+        background: var(--ink);
+      }
+      /* On a pale blanket the words and the wind button go dark. */
+      body.on-light #title a,
+      body.on-light #hint {
+        color: #1f1a14b0;
+      }
+      body.on-light #title strong {
+        color: #1f1a14;
+      }
+      body.on-light #wind {
+        color: #1f1a14;
+        background: #1f1a141f;
+      }
+      body.on-light #random {
+        color: #f4efe6;
+        background: #1f1a14;
+      }
+      @media (max-width: 620px) {
+        #title {
+          top: 62px;
+          left: 18px;
+        }
+        #hint {
+          top: 86px;
+          left: 18px;
+          right: 18px;
+        }
+      }
+    </style>
+    <script type="module" src="/src/days/04-tangle.js"></script>
+  </head>
+  <body>
+    <canvas id="view"></canvas>
+    <p id="message">Loading</p>
+    <div id="title">
+      <a href="../../">Codevember</a><strong>04 Tangle</strong>
+    </div>
+    <p id="hint">Pull a thread</p>
+    <div id="bar">
+      <button id="wind" type="button" aria-pressed="false">Hold to wind</button>
+      <button id="random" type="button">Random</button>
+    </div>
+    <div id="controls"></div>
+  </body>
+</html>

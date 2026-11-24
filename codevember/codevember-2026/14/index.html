@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#081329" />
+    <meta
+      name="description"
+      content="Tension. Interlocked steel chains pull tight, recoil, and fracture. An interactive WebGPU experiment."
+    />
+    <title>Codevember 2026 / 14 / Tension</title>
+    <link rel="canonical" href="https://mrdoob.github.io/codevember-2026/14/">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Codevember 2026">
+    <meta property="og:title" content="Codevember 2026 / 14 / Tension">
+    <meta property="og:description" content="Tension. Interlocked steel chains pull tight, recoil, and fracture. An interactive WebGPU experiment.">
+    <meta property="og:url" content="https://mrdoob.github.io/codevember-2026/14/">
+    <meta property="og:image" content="https://mrdoob.github.io/codevember-2026/14/preview.webp">
+    <meta property="og:image:type" content="image/webp">
+    <meta property="og:image:width" content="800">
+    <meta property="og:image:height" content="800">
+    <meta property="og:image:alt" content="Rusted steel chains stretching across a dark blue cavern.">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@mrdoob">
+    <meta name="twitter:title" content="Codevember 2026 / 14 / Tension">
+    <meta name="twitter:description" content="Tension. Interlocked steel chains pull tight, recoil, and fracture. An interactive WebGPU experiment.">
+    <meta name="twitter:image" content="https://mrdoob.github.io/codevember-2026/14/preview.webp">
+    <meta name="twitter:image:alt" content="Rusted steel chains stretching across a dark blue cavern.">
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="style.css" />
+    <script type="importmap">
+      {
+        "imports": {
+          "box3d.js/inline": "https://cdn.jsdelivr.net/npm/box3d.js@0.1.1/dist/box3d.inline.mjs",
+          "three": "https://cdn.jsdelivr.net/gh/mrdoob/three.js@a70ee1ad92a681b7b8c42d23b6ede4febb28b25c/build/three.webgpu.js",
+          "three/webgpu": "https://cdn.jsdelivr.net/gh/mrdoob/three.js@a70ee1ad92a681b7b8c42d23b6ede4febb28b25c/build/three.webgpu.js",
+          "three/tsl": "https://cdn.jsdelivr.net/gh/mrdoob/three.js@a70ee1ad92a681b7b8c42d23b6ede4febb28b25c/build/three.tsl.js",
+          "three/addons/": "https://cdn.jsdelivr.net/gh/mrdoob/three.js@a70ee1ad92a681b7b8c42d23b6ede4febb28b25c/examples/jsm/"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <main>
+      <canvas
+        tabindex="0"
+        aria-label="Interlocked steel chains pulled until their links break. Hold to pull; release to relax. A toggles automatic pulling. Space pauses. H hides the interface."
+      ></canvas>
+    </main>
+    <header>
+      <a href="https://mrdoob.github.io/codevember-2026/">CODEVEMBER 2026</a> /
+      14 / TENSION
+    </header>
+    <div id="status" role="status">Forging the chains…</div>
+    <script type="module" src="bootstrap.js"></script>
+  </body>
+</html>

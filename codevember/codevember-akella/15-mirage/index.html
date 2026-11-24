@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>mirage</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      body {
+        background: #2b2233;
+      }
+      canvas {
+        display: block;
+      }
+      /* What shows till the first picture is on the screen: the word over a horizon, and under it the word again,
+         upside down, as the hot sand shows the sky. The word floats and wavers; what is under it, more so, each
+         letter on its own beat, as air does over sand. When the picture comes it all sinks into the horizon, as a
+         mirage does when it is come near. In the page itself, so it is there before any script is. Only
+         transforms and opacity move: those go on while the page is busy building its shaders, which is most of
+         the wait and would stop anything a script drove. */
+      #loader {
+        position: fixed;
+        inset: 0;
+        z-index: 20000; /* over the panel and the counter, which come before the picture does */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(#1f1a2e 0%, #3b2c42 38%, #7a5459 50%, #4a3640 52%, #2b2233 100%);
+        font: italic 300 clamp(24px, 4.6vmin, 46px) / 1 "Iowan Old Style", "Palatino", Georgia, serif;
+        letter-spacing: 0.06em;
+        --base: 0.8em; /* where the letters stand in their line: the mirror's line */
+        transition: opacity 1.4s ease 0.35s;
+      }
+      #loader.done {
+        opacity: 0;
+        pointer-events: none;
+      }
+      #loader .shore {
+        position: relative;
+        display: flex;
+        gap: 0.08em;
+        margin-top: calc(1em - 2 * var(--base)); /* (so that the horizon is the middle of the screen) */
+        transform-origin: 50% var(--base);
+        will-change: transform;
+        transition: transform 1.2s cubic-bezier(0.5, 0, 0.3, 1);
+      }
+      /* the horizon, through the foot of the word */
+      #loader .shore::before {
+        content: "";
+        position: absolute;
+        left: -3em;
+        right: -3em;
+        top: var(--base);
+        height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(255, 214, 160, 0.45) 30%, rgba(255, 214, 160, 0.45) 70%, transparent);
+      }
+      /* a letter, and under it what the sand shows of it */
+      #loader .l {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      #loader .l b {
+        display: block;
+        height: 1em;
+        font-weight: 300;
+        color: #f4d7aa;
+        text-shadow: 0 0 0.7em rgba(255, 190, 120, 0.35);
+        will-change: transform, opacity;
+        animation: float 3.6s ease-in-out infinite;
+        animation-delay: calc(var(--i) * -0.41s);
+      }
+      #loader .l u {
+        display: block;
+        height: 1em;
+        text-decoration: none;
+        margin-top: -1em; /* on the letter, and turned over about where it stands */
+        color: #c9b6dc;
+        transform: scaleY(-1);
+        transform-origin: 50% var(--base);
+        will-change: transform, opacity;
+        animation: shimmer 1.7s ease-in-out infinite;
+        animation-delay: calc(var(--i) * -0.23s);
+        -webkit-mask: linear-gradient(transparent 0%, #000 100%);
+        mask: linear-gradient(transparent 0%, #000 100%);
+      }
+      /* the mirage sinks into the horizon, and the horizon goes */
+      #loader.done .shore {
+        transform: scaleY(0.04);
+      }
+      #loader p {
+        display: none;
+        max-width: 22em;
+        margin: 0;
+        color: #cdb9c6;
+        font: 14px/1.5 system-ui, sans-serif;
+        letter-spacing: 0.04em;
+        text-align: center;
+      }
+      #loader.failed .shore {
+        display: none;
+      }
+      #loader.failed p {
+        display: block;
+      }
+      @keyframes float {
+        0%,
+        100% {
+          translate: 0 0;
+          opacity: 0.95;
+        }
+        30% {
+          translate: 0.015em -0.05em;
+          opacity: 0.7;
+        }
+        60% {
+          translate: -0.015em -0.02em;
+          opacity: 1;
+        }
+      }
+      /* (translate and scale stand apart from the transform, which turns it over: they move it, it stays turned) */
+      @keyframes shimmer {
+        0%,
+        100% {
+          translate: 0 0.04em;
+          scale: 1 0.82;
+          opacity: 0.42;
+        }
+        25% {
+          translate: 0.05em 0.02em;
+          scale: 1.04 0.95;
+          opacity: 0.22;
+        }
+        50% {
+          translate: -0.03em 0.06em;
+          scale: 0.97 0.7;
+          opacity: 0.5;
+        }
+        75% {
+          translate: -0.06em 0.03em;
+          scale: 1.03 0.9;
+          opacity: 0.28;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        #loader .l b,
+        #loader .l u {
+          animation: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="loader" role="status" aria-label="miraging">
+      <div class="shore" aria-hidden="true"><span class="l" style="--i: 0"><b>m</b><u>m</u></span><span class="l" style="--i: 1"><b>i</b><u>i</u></span><span class="l" style="--i: 2"><b>r</b><u>r</u></span><span class="l" style="--i: 3"><b>a</b><u>a</u></span><span class="l" style="--i: 4"><b>g</b><u>g</u></span><span class="l" style="--i: 5"><b>i</b><u>i</u></span><span class="l" style="--i: 6"><b>n</b><u>n</u></span><span class="l" style="--i: 7"><b>g</b><u>g</u></span></div>
+      <p></p>
+    </div>
+    <script>
+      // without WebGPU nothing will come, and with it something can still go wrong: say so, rather than waver for ever
+      {
+        const loader = document.getElementById("loader");
+        const say = (text) => {
+          if (loader.classList.contains("done")) return;
+          loader.classList.add("failed");
+          loader.querySelector("p").textContent = text;
+        };
+        if (!navigator.gpu) say("this one needs WebGPU: a recent Chrome, Edge or Safari");
+        addEventListener("error", (e) => say(e.message || "something went wrong"));
+        addEventListener("unhandledrejection", (e) => say(String((e.reason && e.reason.message) || e.reason || "something went wrong")));
+      }
+    </script>
+    <script type="module" src="./src/index.ts"></script>
+  </body>
+</html>

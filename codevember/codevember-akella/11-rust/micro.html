@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>rust · micro</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      body {
+        background: #111;
+      }
+      canvas {
+        display: block;
+      }
+      #note {
+        position: fixed;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        color: #8a7a6a;
+        font: 13px/1.4 system-ui, sans-serif;
+        letter-spacing: 0.08em;
+        pointer-events: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="note">…</div>
+    <script type="module" src="./src/micro.ts"></script>
+  </body>
+</html>

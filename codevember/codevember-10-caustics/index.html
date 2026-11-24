@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>10 — caustics</title>
+    <style>
+      html, body { margin: 0; height: 100%; overflow: hidden; background: #b9b6b0; color: #eef0ec; font: 11px/1.4 ui-sans-serif, system-ui, sans-serif; }
+      canvas { position: fixed; inset: 0; display: block; touch-action: none; }
+      #bar { position: fixed; left: 0; right: 0; bottom: 0; height: 34px; display: flex; align-items: center; gap: 16px; padding: 0 14px; letter-spacing: 0.04em; text-shadow: 0 0 6px #0008; transition: opacity 0.4s; }
+      #bar.hidden { opacity: 0; pointer-events: none; }
+      #info { margin-right: auto; opacity: 0.8; }
+      button { font: inherit; color: inherit; background: none; border: 0; padding: 2px 0; cursor: pointer; opacity: 0.7; text-shadow: inherit; }
+      button:hover { opacity: 1; }
+      @media (max-width: 700px) { #info { display: none; } }
+    </style>
+  </head>
+  <body>
+    <div id="bar"><span id="info"></span></div>
+    <!-- lets the folder run as-is on any static server, without the vite build;
+         keep the version in sync with package.json -->
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+          "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+        }
+      }
+    </script>
+    <script type="module" src="./main.js"></script>
+  </body>
+</html>

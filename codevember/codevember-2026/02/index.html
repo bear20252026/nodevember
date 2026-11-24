@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#030814">
+  <title>Codevember 2026 / 02 / Shatter</title>
+  <meta name="description" content="Glass shapes fall and shatter into fragments. An interactive WebGPU experiment for Codevember 2026.">
+  <link rel="canonical" href="https://mrdoob.github.io/codevember-2026/02/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Codevember 2026">
+  <meta property="og:title" content="Codevember 2026 / 02 / Shatter">
+  <meta property="og:description" content="Glass shapes fall and shatter into fragments. An interactive WebGPU experiment for Codevember 2026.">
+  <meta property="og:url" content="https://mrdoob.github.io/codevember-2026/02/">
+  <meta property="og:image" content="https://mrdoob.github.io/codevember-2026/02/preview.webp">
+  <meta property="og:image:type" content="image/webp">
+  <meta property="og:image:width" content="800">
+  <meta property="og:image:height" content="800">
+  <meta property="og:image:alt" content="Colored glass fragments scattered above a dark reflective surface.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@mrdoob">
+  <meta name="twitter:title" content="Codevember 2026 / 02 / Shatter">
+  <meta name="twitter:description" content="Glass shapes fall and shatter into fragments. An interactive WebGPU experiment for Codevember 2026.">
+  <meta name="twitter:image" content="https://mrdoob.github.io/codevember-2026/02/preview.webp">
+  <meta name="twitter:image:alt" content="Colored glass fragments scattered above a dark reflective surface.">
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="style.css">
+  <script type="importmap">
+    { "imports": {
+      "box3d.js/inline": "https://cdn.jsdelivr.net/npm/box3d.js@0.1.1/dist/box3d.inline.mjs",
+      "three": "https://cdn.jsdelivr.net/npm/three@0.187.0/build/three.webgpu.js",
+      "three/webgpu": "https://cdn.jsdelivr.net/npm/three@0.187.0/build/three.webgpu.js",
+      "three/tsl": "https://cdn.jsdelivr.net/npm/three@0.187.0/build/three.tsl.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.187.0/examples/jsm/"
+    } }
+  </script>
+</head>
+<body>
+  <main aria-label="Glass primitives falling and shattering"><canvas aria-label="Click to drop the next glass primitive. Drag to orbit."></canvas></main>
+  <header><span><a href="https://mrdoob.github.io/codevember-2026/">CODEVEMBER 2026</a> / 02 / SHATTER</span><p>Click or Enter to drop · Drag to orbit · Space to pause</p></header>
+  <div id="status" role="status">Preparing glass…</div>
+  <script type="module" src="main.js"></script>
+</body>
+</html>

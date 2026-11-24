@@ -1,0 +1,22 @@
+*{box-sizing:border-box}html,body{margin:0;height:100%;overflow:hidden;background:#030504;color:#c9c9b9;font:11px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace}[hidden]{display:none!important}main{position:fixed;inset:0}canvas{display:block;width:100%;height:100%;touch-action:none;cursor:grab;outline:none!important}canvas:active{cursor:grabbing}canvas:focus,canvas:focus-visible{outline:none!important}header{position:fixed;top:24px;left:28px;letter-spacing:.16em;pointer-events:none;color:var(--label)}a{color:inherit;text-decoration:none;pointer-events:auto}#status{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);letter-spacing:.06em;text-align:center;color:var(--label)}
+/* One light label color for the header, the closed settings title, the
+   loading text and the controls: pale sea-green at 72% opacity, no shadow. */
+:root{--label:#d3e2dcb8}
+/* Mid-water tone of the opening view, so the page fades into the scene. */
+html,body{background:#285a62;color:#e4e3cd}
+.ui-hidden header,.ui-hidden .lil-gui,.ui-hidden #controls{display:none}
+/* Controls as plain text in the bottom left. */
+#controls{position:fixed;left:28px;bottom:22px;margin:0;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--label);pointer-events:none}
+#controls b{font-weight:700}
+#controls .touch{display:none}
+@media(pointer:coarse){#controls .keys{display:none}#controls .touch{display:inline}}
+.lil-gui.root{top:20px;right:28px}
+.lil-gui.root,.lil-gui.root .lil-gui{--background-color:#0a100df0;--text-color:#c9c9b9;--title-background-color:transparent;--title-text-color:#dfe3d2;--widget-color:#1d261d;--hover-color:#2b382b;--focus-color:#3a4a37;--number-color:#c8d39c;--string-color:#c8d39c;--font-size:11px;--font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+.lil-gui.root,.lil-gui.root *{text-transform:uppercase}
+.lil-gui.root.closed,.lil-gui.root .lil-gui{background-color:transparent}
+.lil-gui.root .title{text-align:center}
+/* Same weight and tracking as the header beside it (lil-gui titles are 600). */
+.lil-gui.root>.title{font-weight:400;letter-spacing:.16em}
+.lil-gui.root.closed{--title-text-color:var(--label)}
+.lil-gui.root .title::before{position:static;padding-right:2px}
+@media(max-width:650px){header,.lil-gui.root>.title{letter-spacing:.08em}header{left:18px;top:20px;font-size:9px;letter-spacing:.08em}.lil-gui.root{right:16px;top:52px}#controls{left:18px;bottom:18px;font-size:9px;letter-spacing:.06em}}

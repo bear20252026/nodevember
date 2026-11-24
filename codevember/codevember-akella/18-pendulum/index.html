@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>pendulum</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #bdc8d4;
+      }
+      canvas {
+        display: block;
+      }
+      /* the ball's sizes, to switch between as it runs (src/veil.ts; the links also open on their own) */
+      .balls {
+        position: fixed;
+        top: 12px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 10;
+        display: flex;
+        gap: 4px;
+        padding: 4px;
+        border-radius: 999px;
+        background: rgba(40, 48, 60, 0.32);
+        backdrop-filter: blur(6px);
+        font: 500 13px/1 system-ui, -apple-system, sans-serif;
+        letter-spacing: 0.02em;
+      }
+      .balls a {
+        padding: 7px 14px;
+        border-radius: 999px;
+        color: #f4f6fa;
+        text-decoration: none;
+        opacity: 0.8;
+      }
+      .balls a:hover {
+        opacity: 1;
+      }
+      .balls a[aria-current="page"] {
+        background: rgba(244, 246, 250, 0.92);
+        color: #8a4a36;
+        opacity: 1;
+      }
+      /* narrow: below the counter and the panel's bar, which meet it in the corners */
+      @media (max-width: 780px) {
+        .balls {
+          top: 60px;
+        }
+      }
+      /* What shows till the first picture is on the screen: the word hung on an arc, a letter to a peg, and a ball
+         on a cord swinging through it, knocking each letter aside as it goes by. A letter's knock is timed from where
+         the ball is: at amplitude A it passes the angle a at acos(-a / A) / 2π of its period (--f), and again as long
+         before the period's end on its way back. In the page itself, so it is there before any script is, and only
+         transforms and opacity move: those go on while the page is busy building its shaders. */
+      #loader {
+        --T: 2.8s;
+        position: fixed;
+        inset: 0;
+        z-index: 20000; /* over the panel and the counter, which come before the picture does */
+        overflow: hidden;
+        background: radial-gradient(110% 95% at 58% 72%, #f3f5fb 0%, #eaedf3 45%, #d6dae1 78%, #c4c8cf 100%);
+        font: 500 clamp(24px, 5.2vmin, 54px) / 1 "Avenir Next", "Helvetica Neue", system-ui, sans-serif;
+        transition: opacity 0.9s ease 0.1s;
+      }
+      #loader.done {
+        opacity: 0;
+        pointer-events: none;
+      }
+      /* the pivot, above the middle: everything hangs from here */
+      #loader .hang {
+        position: absolute;
+        left: 50%;
+        top: calc(50% - 11.2em);
+        animation: appear 0.5s ease both;
+      }
+      #loader span {
+        position: absolute;
+        transform: rotate(calc(var(--a) * -1deg)) translateY(11.1em);
+      }
+      /* a peg */
+      #loader span::before {
+        content: "";
+        position: absolute;
+        left: -0.045em;
+        top: -0.05em;
+        width: 0.09em;
+        height: 0.09em;
+        border-radius: 50%;
+        background: #8b94a0;
+      }
+      /* the letter on it: knocked one way as the ball goes over, the other as it comes back */
+      #loader b,
+      #loader i {
+        display: block;
+        width: 1.1em;
+        font-style: normal;
+        font-weight: inherit;
+        text-align: center;
+        transform-origin: 50% 0;
+        will-change: transform;
+        animation: knock var(--T) linear infinite;
+      }
+      #loader b {
+        --way: -1;
+        margin-left: -0.55em;
+        animation-delay: calc((var(--f) - 1) * var(--T));
+      }
+      #loader i {
+        --way: 1;
+        position: relative;
+        padding-top: 0.2em;
+        color: #7d8794;
+        animation-delay: calc(var(--f) * -1 * var(--T));
+      }
+      /* and lit by it: copper, dying away */
+      #loader i::before,
+      #loader i::after {
+        content: attr(data-c);
+        position: absolute;
+        inset: 0.2em 0 0;
+        color: #dd7b58;
+        opacity: 0;
+        animation: glow var(--T) ease-out infinite;
+        animation-delay: calc((var(--f) - 1) * var(--T));
+      }
+      #loader i::after {
+        animation-delay: calc(var(--f) * -1 * var(--T));
+      }
+      /* the pendulum, a half period each way on a curve that is a sine's */
+      #loader .arm {
+        position: absolute;
+        will-change: transform;
+        animation: swing calc(var(--T) / 2) cubic-bezier(0.3642, 0, 0.6358, 1) infinite alternate;
+      }
+      #loader .arm::before {
+        content: "";
+        position: absolute;
+        left: -0.02em;
+        top: -0.4em;
+        width: max(1px, 0.04em);
+        height: 11.7em;
+        background: linear-gradient(rgba(20, 22, 26, 0), #14161a 30%);
+      }
+      /* the ball, chrome; turned back as the cord turns, so the room it shows stays upright */
+      #loader .arm u {
+        position: absolute;
+        left: -0.58em;
+        top: 11.1em;
+        width: 1.16em;
+        height: 1.16em;
+        border-radius: 50%;
+        background:
+          radial-gradient(circle at 36% 24%, #fff 0 8%, rgba(255, 255, 255, 0) 24%),
+          radial-gradient(circle, rgba(40, 48, 60, 0) 56%, rgba(40, 48, 60, 0.55) 71%),
+          linear-gradient(#c9d0d9 0%, #f4f6fa 34%, #cdd4dc 47%, #4d5662 53%, #8d96a2 60%, #e6eaf0 80%, #f6f8fb 100%);
+        box-shadow: 0 0.55em 0.9em -0.2em rgba(60, 72, 90, 0.4);
+        animation: swing calc(var(--T) / 2) cubic-bezier(0.3642, 0, 0.6358, 1) infinite alternate-reverse;
+      }
+      #loader p {
+        display: none;
+        position: absolute;
+        inset: 0;
+        place-content: center;
+        justify-items: center;
+        margin: 0 auto;
+        max-width: 22em;
+        color: #5c6672;
+        font-size: 15px;
+        line-height: 1.5;
+        text-align: center;
+      }
+      #loader.failed .hang {
+        display: none;
+      }
+      #loader.failed p {
+        display: grid;
+      }
+      @keyframes appear {
+        from {
+          opacity: 0;
+        }
+      }
+      @keyframes swing {
+        from {
+          transform: rotate(31deg);
+        }
+        to {
+          transform: rotate(-31deg);
+        }
+      }
+      @keyframes knock {
+        0% {
+          transform: rotate(0deg);
+          animation-timing-function: cubic-bezier(0.1, 0.6, 0.4, 1);
+        }
+        5% {
+          transform: rotate(calc(var(--way) * 38deg));
+          animation-timing-function: ease-in-out;
+        }
+        15% {
+          transform: rotate(calc(var(--way) * -20deg));
+          animation-timing-function: ease-in-out;
+        }
+        25% {
+          transform: rotate(calc(var(--way) * 11deg));
+          animation-timing-function: ease-in-out;
+        }
+        35% {
+          transform: rotate(calc(var(--way) * -5.5deg));
+          animation-timing-function: ease-in-out;
+        }
+        45% {
+          transform: rotate(calc(var(--way) * 2.5deg));
+          animation-timing-function: ease-in-out;
+        }
+        57%,
+        100% {
+          transform: rotate(0deg);
+        }
+      }
+      @keyframes glow {
+        0% {
+          opacity: 1;
+        }
+        48%,
+        100% {
+          opacity: 0;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        #loader b,
+        #loader i,
+        #loader i::before,
+        #loader i::after {
+          animation: none;
+        }
+        #loader .arm {
+          animation: none;
+          transform: rotate(31deg);
+        }
+        #loader .arm u {
+          animation: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="loader" role="status" aria-label="penduluming">
+      <div class="hang" aria-hidden="true"><span style="--a: -23; --f: 0.1110"><b><i data-c="p">p</i></b></span><span style="--a: -18.4; --f: 0.1429"><b><i data-c="e">e</i></b></span><span style="--a: -13.8; --f: 0.1706"><b><i data-c="n">n</i></b></span><span style="--a: -9.2; --f: 0.1960"><b><i data-c="d">d</i></b></span><span style="--a: -4.6; --f: 0.2203"><b><i data-c="u">u</i></b></span><span style="--a: 0; --f: 0.2440"><b><i data-c="l">l</i></b></span><span style="--a: 4.6; --f: 0.2677"><b><i data-c="u">u</i></b></span><span style="--a: 9.2; --f: 0.2920"><b><i data-c="m">m</i></b></span><span style="--a: 13.8; --f: 0.3174"><b><i data-c="i">i</i></b></span><span style="--a: 18.4; --f: 0.3451"><b><i data-c="n">n</i></b></span><span style="--a: 23; --f: 0.3770"><b><i data-c="g">g</i></b></span><div class="arm"><u></u></div></div>
+      <p></p>
+    </div>
+    <script>
+      // without WebGPU nothing will come, and with it something can still go wrong: say so, rather than swing for ever
+      {
+        const loader = document.getElementById("loader");
+        const say = (text) => {
+          if (loader.classList.contains("done")) return;
+          loader.classList.add("failed");
+          loader.querySelector("p").textContent = text;
+        };
+        if (!navigator.gpu) say("this one needs WebGPU: a recent Chrome, Edge or Safari");
+        addEventListener("error", (e) => say(e.message || "something went wrong"));
+        addEventListener("unhandledrejection", (e) => say(String((e.reason && e.reason.message) || e.reason || "something went wrong")));
+      }
+    </script>
+    <nav class="balls" aria-label="the ball's size">
+      <a href="./">ball</a><a href="./?ball=0.26">big</a><a href="./?ball=0.38">bigger</a><a href="./?ball=0.52">huge</a>
+    </nav>
+    <script type="module" src="./src/veil.ts"></script>
+  </body>
+</html>

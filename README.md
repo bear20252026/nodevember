@@ -7,6 +7,15 @@ hand modelling. Days 1–8 come with the `.blend` file and the Python build scri
 exactly how it is made and build it again yourself. From Day 9 on, a day folder holds a node-by-node tutorial and the
 finished renders.
 
+## Codevember archive
+
+Sixteen Codevember 2026 works moved here from [paper-widgets](https://github.com/bear20252026/paper-widgets) on 2026-11-24: three complete sets (mrdoob, Yuri Artiukh and curllmooha) and thirteen single-prompt studies.
+
+- [Open the Codevember archive](codevember/index.html)
+- [Archive notes and credits](codevember/README.md)
+
+The Codevember works keep their own credits and licences; they are not relicensed by this repository's MIT licence.
+
 ## 2026
 
 | Day | Prompt | Piece | |

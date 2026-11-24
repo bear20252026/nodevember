@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>06 — orrery</title>
+    <style>
+      :root { --ink: #3a2412; --paper: #e9d8b4; --m: clamp(14px, 3.2vmin, 40px); }
+      html, body { margin: 0; height: 100%; overflow: hidden; background: var(--paper); }
+      body { background:
+        radial-gradient(ellipse at 30% 20%, #f1e3c4 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 90%, #d8bf90 0%, transparent 55%), var(--paper); }
+      /* the plate: the picture inside a double rule */
+      #plate { position: fixed; inset: calc(var(--m) * 1.9) var(--m) calc(var(--m) * 1.9); outline: 2px solid var(--ink);
+        outline-offset: 5px; box-shadow: 0 0 0 9px var(--paper), 0 0 0 10px var(--ink); background: #0b0d14; }
+      #plate canvas { position: absolute; inset: 0; display: block; width: 100%; height: 100%; touch-action: none; cursor: grab; }
+      #plate canvas:active { cursor: grabbing; }
+      /* the switches: small captions in the bottom margin, under the plate */
+      #switches { position: fixed; left: 50%; bottom: calc(var(--m) * 0.95); transform: translate(-50%, 50%);
+        display: flex; gap: 0.6em; white-space: nowrap; }
+      #switches button { font: italic clamp(10px, 1.4vmin, 13px) / 1 Georgia, 'Times New Roman', serif; letter-spacing: 0.05em;
+        color: var(--ink); opacity: 0.5; background: none; border: 0; padding: 4px 8px; cursor: pointer; transition: opacity 0.3s; }
+      #switches button:hover, #switches button[aria-pressed='true'] { opacity: 0.85; }
+      #switches button[hidden] { display: none; }
+      /* the two systems, bottom right: the one in use in full ink */
+      #system { position: fixed; right: var(--m); bottom: calc(var(--m) * 0.55); display: flex; gap: 0.2em;
+        font: italic 15px Georgia, serif; color: var(--ink); letter-spacing: 0.04em; }
+      #system button { font: inherit; color: inherit; letter-spacing: inherit; background: none; border: 0;
+        padding: 2px 4px; cursor: pointer; opacity: 0.55; transition: opacity 0.3s; }
+      #system button:hover { opacity: 0.85; text-decoration: underline; }
+      #system button[aria-pressed='true'] { opacity: 1; text-decoration: underline; text-underline-offset: 3px; }
+      #system button[hidden] { display: none; }
+      #system span { opacity: 0.4; }
+      #centre { position: fixed; left: var(--m); bottom: calc(var(--m) * 0.55); font: italic 15px Georgia, serif;
+        color: var(--ink); letter-spacing: 0.04em; }
+      /* time, in the top margin: the year, and back / pause / forward */
+      #time { position: fixed; left: 50%; top: calc(var(--m) * 0.95); transform: translate(-50%, -50%);
+        display: flex; align-items: baseline; gap: 0.2em; white-space: nowrap;
+        font: italic 15px Georgia, serif; color: var(--ink); letter-spacing: 0.04em; }
+      #time button { font: inherit; color: inherit; letter-spacing: inherit; background: none; border: 0;
+        padding: 2px 4px; cursor: pointer; opacity: 0.55; transition: opacity 0.3s; }
+      #time button:hover { opacity: 0.85; text-decoration: underline; }
+      #time button[aria-pressed='true'] { opacity: 1; text-decoration: underline; text-underline-offset: 3px; }
+      #time span { opacity: 0.4; }
+      #year { opacity: 0.75; min-width: 6.5em; text-align: right; margin-right: 0.6em; font-variant-numeric: tabular-nums; }
+    </style>
+  </head>
+  <body>
+    <div id="plate"></div>
+    <div id="switches">
+      <button id="tilt" aria-pressed="false">Tilt (T)</button>
+      <button id="drift" aria-pressed="true" title="the eye going slowly round the machine">Drift (D)</button>
+    </div>
+    <div id="system">
+      <button id="ptolemy" aria-pressed="false">Ptolemy</button><span>·</span><button id="copernicus" aria-pressed="false">Copernicus</button>
+    </div>
+    <div id="centre"></div>
+    <div id="time">
+      <output id="year"></output>
+      <button id="backward" aria-pressed="false" title="go back in time (←, again to go faster)">◂ Back</button><span>·</span><button id="pause" aria-pressed="false" title="Space">Pause</button><span>·</span><button id="forward" aria-pressed="true" title="→, again to go faster">Forward ▸</button>
+    </div>
+    <!-- lets the folder run as-is on any static server, without the vite build;
+         keep the version in sync with package.json -->
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+          "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+        }
+      }
+    </script>
+    <script type="module" src="./main.js"></script>
+  </body>
+</html>

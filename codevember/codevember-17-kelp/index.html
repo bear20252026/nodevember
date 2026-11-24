@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>17 — kelp</title>
+    <style>
+      html, body { margin: 0; height: 100%; overflow: hidden; background: #062330; color: #cfe6e4; font: 11px/1.4 ui-sans-serif, system-ui, sans-serif; }
+      canvas { position: fixed; inset: 0; display: block; touch-action: none; cursor: crosshair; }
+      /* the brush selector: a thin upright slab of frosted glass down the left side, holding a round well per kind,
+         each a live preview; out of the way of the seafloor, where lines start. Its wells shrink to fit short screens */
+      #brush { position: fixed; left: 16px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; align-items: flex-start; gap: 10px; transition: opacity 0.4s; user-select: none; }
+      #brush.hidden { opacity: 0; pointer-events: none; }
+      #slab { --d: clamp(22px, calc((100vh - 170px) / 11.43), 52px); --g: calc(var(--d) * 0.27); display: flex; flex-direction: column; align-items: center; gap: var(--g); padding: calc(var(--d) * 0.19); border-radius: 999px;
+        background: rgba(214, 238, 236, 0.12);
+        -webkit-backdrop-filter: blur(22px) saturate(1.25); backdrop-filter: blur(22px) saturate(1.25);
+        box-shadow: inset 0 0 0 0.5px rgba(255,255,255,0.28), inset 0 1px 0 rgba(255,255,255,0.12), 0 12px 40px -12px rgba(0,16,24,0.45); }
+      #wells { display: flex; flex-direction: column; gap: var(--g); }
+      .well { position: relative; width: var(--d); height: var(--d); padding: 0; border: 0; border-radius: 50%; cursor: pointer;
+        background: rgba(236, 246, 244, 0.62); opacity: 0.88;
+        box-shadow: inset 0 0 0 0.5px rgba(255,255,255,0.35);
+        outline: 1px solid rgba(240,252,250,0); outline-offset: 3px;
+        transition: opacity 0.35s ease, outline-color 0.35s ease, background-color 0.35s ease; }
+      .well canvas { display: block; width: 100%; height: 100%; border-radius: 50%; position: static; cursor: pointer; }
+      .well:hover { opacity: 0.96; }
+      .well.on { opacity: 1; background: rgba(240, 249, 247, 0.82); outline-color: rgba(240,252,250,0.75); }
+      .well:focus-visible { outline-color: rgba(240,252,250,0.5); }
+      /* undo, redo, clear: smaller wells of the same glass, past a hairline */
+      #tools { display: flex; flex-direction: column; gap: calc(var(--d) * 0.12); padding-top: var(--g); box-shadow: inset 0 0.5px 0 rgba(255,255,255,0.28); }
+      #tools button { width: calc(var(--d) * 0.7); height: calc(var(--d) * 0.7); padding: 0; border: 0; border-radius: 50%; cursor: pointer; display: grid; place-items: center;
+        color: #eef8f6; background: rgba(236, 246, 244, 0.26); opacity: 0.92;
+        box-shadow: inset 0 0 0 0.5px rgba(255,255,255,0.3); outline: 1px solid rgba(240,252,250,0); outline-offset: 3px;
+        transition: opacity 0.3s ease, background-color 0.3s ease, outline-color 0.3s ease; }
+      #tools svg { width: 50%; height: 50%; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; filter: drop-shadow(0 1px 3px rgba(0,16,24,0.35)); }
+      #tools button:hover { opacity: 1; background: rgba(240, 249, 247, 0.4); }
+      #tools button:disabled { opacity: 0.4; cursor: default; background: rgba(236, 246, 244, 0.26); }
+      #tools button:focus-visible { outline-color: rgba(240,252,250,0.5); }
+      @media (max-width: 520px) { #brush { left: 10px; } #slab { --d: clamp(22px, calc((100vh - 170px) / 11.43), 40px); } }
+    </style>
+  </head>
+  <body>
+    <div id="brush"><div id="slab"><div id="wells"></div><div id="tools">
+      <button id="undo" title="undo (⌘/ctrl z)" aria-label="undo" disabled><svg viewBox="0 0 24 24"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></svg></button>
+      <button id="redo" title="redo (⇧⌘/ctrl z)" aria-label="redo" disabled><svg viewBox="0 0 24 24"><path d="m15 14 5-5-5-5"/><path d="M20 9H9.5a5.5 5.5 0 0 0 0 11H13"/></svg></button>
+      <button id="clear" title="clear: cut them all loose (c)" aria-label="clear" disabled><svg viewBox="0 0 24 24"><path d="M4 7h16"/><path d="M9.5 7V4.5h5V7"/><path d="M6.5 7l1 12.5h9l1-12.5"/></svg></button>
+    </div></div></div>
+    <!-- lets the folder run as-is on any static server, without the vite build;
+         keep the version in sync with package.json -->
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+          "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+        }
+      }
+    </script>
+    <script type="module" src="./boot.js"></script>
+  </body>
+</html>

@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#665748" />
+    <meta
+      name="description"
+      content="A sunlit brass orrery on travertine. Procedural TSL surfaces, coloured glass, screen-space global illumination and reflections."
+    />
+    <title>Codevember 2026 / 06 / Orrery</title>
+    <link rel="canonical" href="https://mrdoob.github.io/codevember-2026/06/">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Codevember 2026">
+    <meta property="og:title" content="Codevember 2026 / 06 / Orrery">
+    <meta property="og:description" content="A sunlit brass orrery on travertine. Procedural TSL surfaces, coloured glass, screen-space global illumination and reflections.">
+    <meta property="og:url" content="https://mrdoob.github.io/codevember-2026/06/">
+    <meta property="og:image" content="https://mrdoob.github.io/codevember-2026/06/preview.webp">
+    <meta property="og:image:type" content="image/webp">
+    <meta property="og:image:width" content="800">
+    <meta property="og:image:height" content="800">
+    <meta property="og:image:alt" content="A brass orrery with orbiting spheres in a sunlit stone room.">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@mrdoob">
+    <meta name="twitter:title" content="Codevember 2026 / 06 / Orrery">
+    <meta name="twitter:description" content="A sunlit brass orrery on travertine. Procedural TSL surfaces, coloured glass, screen-space global illumination and reflections.">
+    <meta name="twitter:image" content="https://mrdoob.github.io/codevember-2026/06/preview.webp">
+    <meta name="twitter:image:alt" content="A brass orrery with orbiting spheres in a sunlit stone room.">
+    <link rel="icon" href="data:," />
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+    <link rel="stylesheet" href="style.css" />
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://cdn.jsdelivr.net/gh/mrdoob/three.js@a70ee1ad92a681b7b8c42d23b6ede4febb28b25c/build/three.webgpu.js",
+          "three/webgpu": "https://cdn.jsdelivr.net/gh/mrdoob/three.js@a70ee1ad92a681b7b8c42d23b6ede4febb28b25c/build/three.webgpu.js",
+          "three/tsl": "https://cdn.jsdelivr.net/gh/mrdoob/three.js@a70ee1ad92a681b7b8c42d23b6ede4febb28b25c/build/three.tsl.js",
+          "three/addons/": "https://cdn.jsdelivr.net/gh/mrdoob/three.js@a70ee1ad92a681b7b8c42d23b6ede4febb28b25c/examples/jsm/"
+        }
+      }
+    </script>
+    <link rel="modulepreload" href="./main.js" />
+  </head>
+  <body>
+    <main
+      aria-label="A brass orrery on a stone pedestal beside a sunlit window"
+    >
+      <canvas
+        tabindex="0"
+        aria-label="Drag a planet to turn time. Drag the background to orbit, scroll to zoom. G toggles SSGI, S toggles SSR, C compares lighting. R resets the view."
+      ></canvas>
+    </main>
+    <header>
+      <span><a href="https://mrdoob.github.io/codevember-2026/">CODEVEMBER 2026</a> / 06 / ORRERY</span>
+      <p>Turn the planets · Drag to orbit</p>
+    </header>
+    <div id="status" role="status">Assembling the instrument…</div>
+    <div id="effect-controls" hidden>
+      <div class="effect-row">
+        <button
+          id="ssgi-toggle"
+          type="button"
+          aria-pressed="true"
+          title="Screen-space global illumination · G"
+        >
+          SSGI
+        </button>
+        <button
+          id="ssr-toggle"
+          type="button"
+          aria-pressed="true"
+          title="Screen-space reflections · S"
+        >
+          SSR
+        </button>
+        <button
+          id="compare-toggle"
+          type="button"
+          aria-pressed="false"
+          title="Compare with base lighting · C"
+        >
+          Compare
+        </button>
+      </div>
+    </div>
+    <div id="light-controls" hidden>
+      <div class="effect-row" aria-label="Camera and lighting">
+        <button id="camera-view" type="button">Change View</button>
+        <button id="day-light" type="button" aria-pressed="true">Day</button>
+        <button id="night-light" type="button" aria-pressed="false">
+          Night
+        </button>
+      </div>
+    </div>
+    <div id="comparison" hidden>
+      <div class="comparison-line"></div>
+    </div>
+    <script type="module" src="bootstrap.js"></script>
+  </body>
+</html>

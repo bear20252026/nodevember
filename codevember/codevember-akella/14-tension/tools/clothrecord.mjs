@@ -1,0 +1,23 @@
+// node tools/clothrecord.mjs <out.webm> [WxH]: records one period of the cloth (index.html?loop) through ssam (cmd+shift+s)
+import { chromium } from "playwright-core";
+import fs from "node:fs";
+import os from "node:os";
+const [out = "cloth.webm", size = "1280x720"] = process.argv.slice(2);
+const base = os.homedir() + "/Library/Caches/ms-playwright/chromium-1243/";
+const sub = fs.readdirSync(base).find((d) => d.startsWith("chrome-"));
+const app = fs.readdirSync(base + sub).find((d) => d.endsWith(".app"));
+const browser = await chromium.launch({ executablePath: `${base}${sub}/${app}/Contents/MacOS/${app.replace(".app", "")}`, headless: true });
+const [w, h] = size.split("x").map(Number);
+const page = await browser.newPage({ viewport: { width: w, height: h }, acceptDownloads: true });
+page.on("pageerror", (e) => console.log("error", e.message));
+page.on("console", (m) => m.text().startsWith("cloth") && console.log(m.text()));
+await page.goto(process.env.URL ?? "http://localhost:5314/?loop");
+await page.waitForFunction(() => window.__cloth && window.__cloth.state.frame > 2, null, { timeout: 300000 });
+await page.addStyleTag({ content: ".lil-gui,canvas+div,body>div:not(:has(canvas)){display:none!important}" });
+const t0 = Date.now();
+const download = page.waitForEvent("download", { timeout: 1800000 });
+await page.evaluate(() => window.dispatchEvent(new KeyboardEvent("keydown", { key: "s", metaKey: true, shiftKey: true })));
+const d = await download;
+await d.saveAs(out);
+console.log(`recorded ${out} in ${((Date.now() - t0) / 1000).toFixed(0)} s`);
+await browser.close();

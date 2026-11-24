@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>rust</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      body {
+        background: #111;
+      }
+      canvas {
+        display: block;
+      }
+      #bodies {
+        position: fixed;
+        top: 12px;
+        left: 12px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        z-index: 10;
+      }
+      #bodies button {
+        font:
+          11px/1 system-ui,
+          sans-serif;
+        letter-spacing: 0.08em;
+        text-transform: lowercase;
+        color: #b9ab98;
+        background: rgba(26, 23, 21, 0.55);
+        border: 1px solid rgba(185, 171, 152, 0.25);
+        border-radius: 999px;
+        padding: 6px 11px;
+        cursor: pointer;
+        backdrop-filter: blur(4px);
+        transition:
+          color 0.2s,
+          border-color 0.2s,
+          background 0.2s;
+      }
+      #bodies button:hover {
+        color: #eadfcc;
+        border-color: rgba(234, 223, 204, 0.5);
+      }
+      #bodies button.on {
+        color: #1a1715;
+        background: #d8ccb4;
+        border-color: #d8ccb4;
+        cursor: default;
+      }
+      #note {
+        position: fixed;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        color: #8a7a6a;
+        font:
+          13px/1.4 system-ui,
+          sans-serif;
+        letter-spacing: 0.08em;
+        pointer-events: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="note">oxidising…</div>
+    <script type="module" src="./src/index.ts"></script>
+  </body>
+</html>

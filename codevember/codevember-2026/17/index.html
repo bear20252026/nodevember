@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#285a62">
+<title>Codevember 2026 / 17 / Kelp</title>
+<meta name="description" content="A drifting journey through a giant kelp forest. Translucent golden blades, ocean currents and scattering sunlight, rendered with WebGPU meshlets.">
+<link rel="canonical" href="https://mrdoob.github.io/codevember-2026/17/">
+<meta property="og:type" content="website"><meta property="og:site_name" content="Codevember 2026">
+<meta property="og:title" content="Codevember 2026 / 17 / Kelp">
+<meta property="og:description" content="Drift through golden kelp and schools of fish in clear blue California water.">
+<meta property="og:url" content="https://mrdoob.github.io/codevember-2026/17/">
+<meta property="og:image" content="https://mrdoob.github.io/codevember-2026/17/preview.webp">
+<meta property="og:image:width" content="800"><meta property="og:image:height" content="800">
+<meta property="og:image:alt" content="Golden kelp blades and reef fish rising through blue California water.">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@mrdoob">
+<meta name="twitter:title" content="Codevember 2026 / 17 / Kelp"><meta name="twitter:image" content="https://mrdoob.github.io/codevember-2026/17/preview.webp">
+<link rel="icon" href="data:,"><link rel="stylesheet" href="style.css">
+  <script type="importmap">{"imports":{
+    "three":"https://cdn.jsdelivr.net/gh/mrdoob/three.js@716d5907b764e9244f07438b95fb5855673d5bbf/build/three.webgpu.js",
+    "three/webgpu":"https://cdn.jsdelivr.net/gh/mrdoob/three.js@716d5907b764e9244f07438b95fb5855673d5bbf/build/three.webgpu.js",
+    "three/tsl":"https://cdn.jsdelivr.net/gh/mrdoob/three.js@716d5907b764e9244f07438b95fb5855673d5bbf/build/three.tsl.js",
+    "three/addons/":"https://cdn.jsdelivr.net/gh/mrdoob/three.js@716d5907b764e9244f07438b95fb5855673d5bbf/examples/jsm/"
+  }}</script>
+  <!-- Fetch the CDN modules in parallel rather than as a five-level import chain. Keep in step with the import map. -->
+  <link rel="modulepreload" href="https://cdn.jsdelivr.net/gh/mrdoob/three.js@716d5907b764e9244f07438b95fb5855673d5bbf/build/three.webgpu.js">
+  <link rel="modulepreload" href="https://cdn.jsdelivr.net/gh/mrdoob/three.js@716d5907b764e9244f07438b95fb5855673d5bbf/build/three.tsl.js">
+  <link rel="modulepreload" href="https://cdn.jsdelivr.net/gh/mrdoob/three.js@716d5907b764e9244f07438b95fb5855673d5bbf/build/three.core.js">
+  <link rel="modulepreload" href="https://cdn.jsdelivr.net/gh/mrdoob/three.js@716d5907b764e9244f07438b95fb5855673d5bbf/examples/jsm/pipelines/MeshletDrawingPipeline.js">
+  <link rel="modulepreload" href="https://cdn.jsdelivr.net/gh/mrdoob/three.js@716d5907b764e9244f07438b95fb5855673d5bbf/examples/jsm/utils/MeshletGeometryUtils.js">
+  <link rel="modulepreload" href="https://cdn.jsdelivr.net/gh/mrdoob/three.js@716d5907b764e9244f07438b95fb5855673d5bbf/examples/jsm/libs/meshopt_clusterizer.module.js">
+  <link rel="modulepreload" href="https://cdn.jsdelivr.net/gh/mrdoob/three.js@716d5907b764e9244f07438b95fb5855673d5bbf/examples/jsm/libs/meshopt_simplifier.module.js">
+  <link rel="modulepreload" href="https://cdn.jsdelivr.net/gh/mrdoob/three.js@716d5907b764e9244f07438b95fb5855673d5bbf/examples/jsm/lights/SunLight.js">
+  <link rel="modulepreload" href="https://cdn.jsdelivr.net/gh/mrdoob/three.js@716d5907b764e9244f07438b95fb5855673d5bbf/examples/jsm/lights/SunLightShadow.js">
+  <link rel="modulepreload" href="https://cdn.jsdelivr.net/gh/mrdoob/three.js@716d5907b764e9244f07438b95fb5855673d5bbf/examples/jsm/lights/SunLightNode.js">
+  <link rel="modulepreload" href="https://cdn.jsdelivr.net/gh/mrdoob/three.js@716d5907b764e9244f07438b95fb5855673d5bbf/examples/jsm/lights/SunShadowNode.js">
+  <link rel="modulepreload" href="https://cdn.jsdelivr.net/gh/mrdoob/three.js@716d5907b764e9244f07438b95fb5855673d5bbf/examples/jsm/tsl/display/FXAANode.js">
+  <link rel="modulepreload" href="https://cdn.jsdelivr.net/gh/mrdoob/three.js@716d5907b764e9244f07438b95fb5855673d5bbf/examples/jsm/libs/lil-gui.module.min.js">
+</head><body>
+<main><canvas tabindex="0" aria-label="A giant kelp forest. Drag to look around, scroll to change depth, W A S D or arrow keys to swim, Q and E to sink and rise, Shift to swim faster. Space pauses, R returns to the flight, H hides controls."></canvas></main>
+<header><a href="../">CODEVEMBER 2026</a> / 17 / KELP</header>
+<p id="controls"><span class="keys"><b>Drag</b> look · <b>Scroll</b> dive · <b>WASD/arrows</b> swim · <b>Q/E</b> sink/rise · <b>Shift</b> faster<br><b>Space</b> pause · <b>M</b> sound · <b>R</b> restart · <b>H</b> hide</span><span class="touch"><b>Drag</b> look · <b>Pinch</b> swim</span></p>
+<div id="status" role="status">Growing the kelp forest…</div>
+<script type="module" src="bootstrap.js"></script></body></html>

@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>14 — tension</title>
+    <style>
+      html, body { margin: 0; height: 100%; overflow: hidden; background: #e8e3da; color: #5a5040; font: 11px/1.4 ui-sans-serif, system-ui, sans-serif; }
+      canvas { position: fixed; inset: 0; display: block; cursor: pointer; }
+      #vignette { position: fixed; inset: 0; pointer-events: none; background: radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0) 55%, rgba(60,50,45,0.07) 100%); }
+      #bar { position: fixed; left: 0; right: 0; bottom: 0; height: 34px; display: flex; align-items: center; gap: 16px; padding: 0 14px; letter-spacing: 0.04em; transition: opacity 0.4s; user-select: none; }
+      #bar.hidden { opacity: 0; pointer-events: none; }
+      #info { margin-right: auto; opacity: 0.8; }
+      /* the sound: a button in the middle at first, in the bar's corner once it has been on */
+      #sound { position: fixed; left: 50%; top: 50%; transform: translate(-50%, -50%); display: flex; align-items: center; gap: 8px; padding: 10px 18px 10px 14px; border: 1px solid rgba(90, 80, 64, 0.35); border-radius: 999px; background: rgba(232, 227, 218, 0.72); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); color: inherit; font: inherit; font-size: 12px; letter-spacing: 0.06em; cursor: pointer; transition: background 0.3s, border-color 0.3s, opacity 0.4s; user-select: none; }
+      #sound:hover { background: rgba(240, 236, 228, 0.9); border-color: rgba(90, 80, 64, 0.6); }
+      #sound svg { width: 16px; height: 16px; flex: none; }
+      #sound .label { overflow: hidden; white-space: nowrap; max-width: 6em; }
+      #sound .off { display: none; }
+      #sound.corner { left: 31px; top: calc(100% - 17px); padding: 5px; border-color: transparent; background: transparent; gap: 0; transition: opacity 0.4s; }
+      #sound.corner:hover { border-color: rgba(90, 80, 64, 0.35); }
+      #sound.corner .label { max-width: 0; opacity: 0; }
+      #sound.corner.muted .on { display: none; }
+      #sound.corner.muted .off { display: inline; }
+      body.corner #bar { padding-left: 54px; }
+      body.hide #sound.corner { opacity: 0; pointer-events: none; }
+    </style>
+  </head>
+  <body>
+    <div id="vignette"></div>
+    <div id="bar"><span id="info"></span></div>
+    <button id="sound" type="button" aria-label="sound on">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M2.5 6h2.2L8 3.2v9.6L4.7 10H2.5z" fill="currentColor" fill-opacity="0.15" />
+        <path class="on" d="M10.4 5.6a3.4 3.4 0 0 1 0 4.8M12.2 3.8a6 6 0 0 1 0 8.4" />
+        <path class="off" d="M10.5 6l3.5 4M14 6l-3.5 4" />
+      </svg>
+      <span class="label">sound</span>
+    </button>
+    <!-- lets the folder run as-is on any static server, without the vite build;
+         keep the version in sync with package.json -->
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+          "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+        }
+      }
+    </script>
+    <script type="module" src="./main.js"></script>
+  </body>
+</html>
