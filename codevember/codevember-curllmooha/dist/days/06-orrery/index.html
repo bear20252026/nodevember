@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Orrery</title>
+    <meta
+      name="description"
+      content="A gravity-well orrery: marble planets orbit an engraved brass funnel, spiral into the sun and are lifted back by an Archimedes screw."
+    />
+    <link rel="icon" href="data:," />
+    <style>
+      :root {
+        --ink: #2a241c;
+        --dim: #2a241c99;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        height: 100%;
+        overflow: hidden;
+        background: #eeebe6;
+        color: var(--ink);
+        font:
+          14px/1.3 ui-sans-serif,
+          -apple-system,
+          "Helvetica Neue",
+          Arial,
+          sans-serif;
+      }
+      canvas {
+        position: fixed;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        display: block;
+        touch-action: none;
+        opacity: 0;
+        transition: opacity 0.9s;
+      }
+      body.ready canvas {
+        opacity: 1;
+      }
+      #message {
+        position: fixed;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        margin: 0;
+        padding: 24px;
+        text-align: center;
+        color: var(--dim);
+        pointer-events: none;
+      }
+      #message:empty {
+        display: none;
+      }
+      #title,
+      #hint,
+      #controls {
+        opacity: 0;
+        transition: opacity 1.2s 0.6s;
+      }
+      body.ready #title,
+      body.ready #hint,
+      body.ready #controls {
+        opacity: 1;
+      }
+      #title {
+        position: fixed;
+        top: 20px;
+        left: 24px;
+        display: flex;
+        gap: 10px;
+        align-items: baseline;
+        z-index: 2;
+      }
+      #title a {
+        color: var(--dim);
+        text-decoration: none;
+      }
+      #title a:hover,
+      #title a:focus-visible {
+        color: var(--ink);
+        text-decoration: underline;
+      }
+      #title strong {
+        font-weight: 500;
+      }
+      #hint {
+        position: fixed;
+        top: 44px;
+        left: 24px;
+        right: 24px;
+        margin: 0;
+        color: var(--dim);
+        pointer-events: none;
+      }
+      #title,
+      #hint {
+        transition:
+          color 0.8s,
+          opacity 1.2s 0.6s;
+      }
+    </style>
+    <script type="module" crossorigin src="../../assets/06-orrery-Ch1IgSY9.js"></script>
+    <link rel="modulepreload" crossorigin href="../../assets/modulepreload-polyfill-ulV_1b7r.js">
+    <link rel="modulepreload" crossorigin href="../../assets/leva-C0l7872o.js">
+    <link rel="modulepreload" crossorigin href="../../assets/stage-FtdQTM4C.js">
+    <link rel="modulepreload" crossorigin href="../../assets/studio-environment-DBA3V6CY.js">
+    <link rel="modulepreload" crossorigin href="../../assets/studio-presets-CDYyrMX7.js">
+    <link rel="modulepreload" crossorigin href="../../assets/DepthOfFieldNode-D7JXNExi.js">
+    <link rel="modulepreload" crossorigin href="../../assets/three-C2t3z6N3.js">
+    <link rel="modulepreload" crossorigin href="../../assets/OrbitControls-VozILqJD.js">
+    <link rel="modulepreload" crossorigin href="../../assets/RoomEnvironment-4itNZRcb.js">
+    <link rel="modulepreload" crossorigin href="../../assets/rendering-panel-Bn79TFs8.js">
+    <link rel="modulepreload" crossorigin href="../../assets/pcss-0nawAAGt.js">
+  </head>
+  <body>
+    <p id="message"></p>
+    <div id="title">
+      <a href="../../">Codevember</a><strong>06 Orrery</strong>
+    </div>
+    <p id="hint">
+      Tap or flick on the funnel to set a planet orbiting. Drag anywhere else to
+      turn
+    </p>
+    <div id="controls"></div>
+  </body>
+</html>
