@@ -179,9 +179,9 @@ the pieces to learn how they are made, but not redistribute them, use them comme
 use them to train models. See [LICENSE](LICENSE).
 ## Linked Codevember sets
 
-Two complete Codevember 2026 sets are linked rather than copied (85 MB and 292 MB), and are **not counted in the twenty Nodevember studies or the sixteen archived Codevember works**:
+Two complete Codevember 2026 sets now live in the parallel [codevember-sets](https://github.com/bear20252026/codevember-sets) repository, rather than being copied into this one. They are **not counted in the twenty Nodevember studies or the sixteen archived Codevember works**; the separate repository keeps both source trees off this repository's 1 GB Pages ceiling.
 
-- [Spite — Codevember 2026](https://spite.github.io/codevember-2026/) — one real-time three.js sketch per day through Day 25, each with a photographic PBR look, seeded randomness and a "How it works" page. **Classified: Codevember · complete set.** [source](https://github.com/spite/codevember-2026)
-- [Theo Tillberg — Codevember 2026](https://ttillberg.github.io/codevember-2026/) — sixteen published days of the same prompt list, each a small standalone experiment. **Classified: Codevember · complete set.** [source](https://github.com/ttillberg/codevember-2026)
+- [Spite — Codevember 2026](https://bear20252026.github.io/codevember-sets/spite/) — one real-time three.js sketch per day through Day 25, each with a photographic PBR look, seeded randomness and a "How it works" page. **Classified: Codevember · complete set.** [source](https://github.com/bear20252026/codevember-sets/tree/main/spite)
+- [Theo Tillberg — Codevember 2026](https://bear20252026.github.io/codevember-sets/theo/) — sixteen pieces from the same prompt list, each a small standalone experiment. **Classified: Codevember · complete set.** [source](https://github.com/bear20252026/codevember-sets/tree/main/theo)
 
 This repository itself is a fork of [yapitw/nodevember](https://github.com/yapitw/nodevember); that upstream is the source of the twenty studies already here, not a separate arrival.
