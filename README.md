@@ -177,3 +177,11 @@ retries if Blender crashes, then encodes the MP4.
 All rights reserved. This is a private project, shared for learning and study only. You may view, download and run
 the pieces to learn how they are made, but not redistribute them, use them commercially, present them as your own or
 use them to train models. See [LICENSE](LICENSE).
+## Linked Codevember sets
+
+Two complete Codevember 2026 sets are linked rather than copied (85 MB and 292 MB), and are **not counted in the twenty Nodevember studies or the sixteen archived Codevember works**:
+
+- [Spite — Codevember 2026](https://spite.github.io/codevember-2026/) — one real-time three.js sketch per day through Day 25, each with a photographic PBR look, seeded randomness and a "How it works" page. **Classified: Codevember · complete set.** [source](https://github.com/spite/codevember-2026)
+- [Theo Tillberg — Codevember 2026](https://ttillberg.github.io/codevember-2026/) — sixteen published days of the same prompt list, each a small standalone experiment. **Classified: Codevember · complete set.** [source](https://github.com/ttillberg/codevember-2026)
+
+This repository itself is a fork of [yapitw/nodevember](https://github.com/yapitw/nodevember); that upstream is the source of the twenty studies already here, not a separate arrival.
