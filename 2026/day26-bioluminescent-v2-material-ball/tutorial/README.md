@@ -17,7 +17,7 @@ textures and no simulation. Two washes fit in 4 s (96 frames), and the wash loop
 
 | File | What it is |
 |---|---|
-| `blue-tears-ball.mp4` | the clip: 1080 × 1080, 24 fps, the 96-frame loop played three times (12 s), Cycles 128 samples, light film grain |
+| `blue-tears-ball.mp4` | the clip: 1080 × 1080, 24 fps, one pass of the 96-frame loop (4 s), starting at frame 22 so it opens on the glowing front; Cycles 128 samples, light film grain |
 | `render.png` | frame 22 (the front just above the equator) at 1080 × 1080 |
 | `nodes/` | the node trees full size: `main.png` (the material `PA_BlueTears`) and `ball.png` (`PA_Ball_GN`) |
 | `post.md` | idea, build notes, caption and alt text |
@@ -295,8 +295,9 @@ light (1.2 m, 55 W) behind-right to pick out the wet edge. Camera: 92 mm, about 
 ## How it was rendered
 
 Cycles, 128 samples with adaptive sampling and denoising, indirect clamp 30, AgX (Medium High Contrast), and a light
-bloom and fog glow in the compositor. The 96 frames were rendered on a Mac, about 9 s a frame, and encoded three
-times over with light film grain (`noise=alls=5:allf=t`) added in the encode.
+bloom and fog glow in the compositor. The 96 frames were rendered on a Mac, about 9 s a frame. The clip is one pass
+of the loop, encoded from frame 22 round to frame 21, with light film grain (`noise=alls=5:allf=t`) added in the
+encode.
 
 The loop was checked numerically. The wash repeats exactly: frame 96 is time 4 s, the same state as time 0, and frame
 1 follows it. The fine flicker does not repeat: the cell flashes' W runs from 0 to 12, and every spark blinks at its

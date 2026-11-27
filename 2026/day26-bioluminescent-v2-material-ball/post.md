@@ -1,6 +1,6 @@
 # Nodevember 2026 · Day 26 · Bioluminescent — Blue Tears on Stone
 
-2026-11-26 · Blender 5.3 · shader nodes and Cycles · a 4 s loop played three times, 1080 × 1080
+2026-11-26 · Blender 5.3 · shader nodes and Cycles · a 4 s seamless loop, 1080 × 1080
 
 ## Idea
 
@@ -19,7 +19,7 @@ smoothly when the next wash starts.
 
 ## Files
 
-- `blue-tears-ball.mp4`: the clip, 1080 × 1080, 24 fps, the 96-frame loop three times (12 s).
+- `blue-tears-ball.mp4`: the clip, 1080 × 1080, 24 fps, one 4 s pass of the 96-frame loop, starting at frame 22.
 - `render.png`: frame 22, the front just above the equator, 1080 × 1080.
 - `render-031.png`: frame 31, the front near the bottom, fastest and brightest, 1080 × 1080.
 - `nodes/`: the node trees: `main.png` (the material) and `ball.png` (the ball and backdrop).
